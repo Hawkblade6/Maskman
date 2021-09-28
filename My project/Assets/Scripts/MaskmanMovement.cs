@@ -7,8 +7,6 @@ public class MaskmanMovement : MonoBehaviour
     [Header("Variables")]
     public float speed;
     public float jumpForce = 2f;
-    public float rayLengthB = 0.1f;
-    public float rayLengthT = 0.05f;
 
     [Header("Pivotes del personaje")]
     public GameObject pivBI;    //Pivotes Bottom
@@ -19,6 +17,8 @@ public class MaskmanMovement : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private float horizontal;
     private float defaultSpeed = 5f;
+    private float rayLengthB = 0.1f; //Rayo de los pivotes de abajo
+    private float rayLengthW = 0.1f; //Rayo de los pivotes de pared
     private bool grounded;  //Controla si el personaje esta en el suelo
 
     // Start is called before the first frame update
@@ -34,11 +34,13 @@ public class MaskmanMovement : MonoBehaviour
         /*
         Debug.DrawRay(pivBD.transform.position, Vector3.down * rayLengthB, Color.red); 
         Debug.DrawRay(pivBI.transform.position, Vector3.down * rayLengthB, Color.red);
-        Debug.DrawRay(pivTI.transform.position, Vector3.left * rayLengthT, Color.red);
-        Debug.DrawRay(pivTD.transform.position, Vector3.right * rayLengthT, Color.red);
+        Debug.DrawRay(pivBD.transform.position, Vector3.right * rayLengthW, Color.red);
+        Debug.DrawRay(pivBI.transform.position, Vector3.left * rayLengthW, Color.red);
+        Debug.DrawRay(pivTD.transform.position, Vector3.right * rayLengthW, Color.red);
+        Debug.DrawRay(pivTI.transform.position, Vector3.left * rayLengthW, Color.red);
         */
 
-        if (Physics2D.Raycast(pivBD.transform.position, Vector3.down, rayLengthB)|| (Physics2D.Raycast(pivBI.transform.position, Vector3.down, rayLengthB) )) //Si colisionan los rayos
+        if (Physics2D.Raycast(pivBD.transform.position, Vector3.down, rayLengthB)|| (Physics2D.Raycast(pivBI.transform.position, Vector3.down, rayLengthB) )) //Si colisionan los rayos con algun terreno
         {
             grounded = true;
             SetDefaultSpeed();
@@ -52,7 +54,6 @@ public class MaskmanMovement : MonoBehaviour
 
             Jump();
         }
-
         CheckWallGrip();
     }
 
@@ -70,8 +71,8 @@ public class MaskmanMovement : MonoBehaviour
     { 
 
         if (!grounded) {
-            //Si el jugador esta presionando el boton 
-            if ((Input.GetKey(KeyCode.A) && Physics2D.Raycast(pivTI.transform.position, Vector3.left, rayLengthB)) || (Input.GetKey(KeyCode.D) && Physics2D.Raycast(pivTD.transform.position, Vector3.right, rayLengthB)))
+            //Si el jugador esta presionando el boton en la direccion que se mueve y hay colision con alguna pared anula el control de direccion para no pegarse a paredes
+            if ((Input.GetKey(KeyCode.A) && (Physics2D.Raycast(pivTI.transform.position, Vector3.left, rayLengthW) || Physics2D.Raycast(pivBI.transform.position, Vector3.left, rayLengthW))) || (Input.GetKey(KeyCode.D) && (Physics2D.Raycast(pivTD.transform.position, Vector3.right, rayLengthB) || Physics2D.Raycast(pivBD.transform.position, Vector3.right, rayLengthW))))
             {
                 speed = 0;
             }
@@ -86,5 +87,4 @@ public class MaskmanMovement : MonoBehaviour
     {
         speed = defaultSpeed;
     }
-
 }
