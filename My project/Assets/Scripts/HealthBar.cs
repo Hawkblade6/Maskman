@@ -47,13 +47,18 @@ public class HealthBar : MonoBehaviour
 
     }
 
+    public float GetHealth() 
+    {
+        return slider.value;
+    } 
+
     IEnumerator FadeawayHealthBar(int health) //Se asegura de que la barra de vida de fondo baje poco a poco
     {
         yield return new WaitForSeconds(0.4f);
         while (fadeawaySlider.value > slider.value)
         {
             fadeawaySlider.value -= 1;
-            yield return new WaitForSeconds(0.03f);     //TODO Habria que hacer un timer universal para cuadrarlo con el tiempo de invulnerabilidad
+            yield return new WaitForSeconds(0.02f);     //TODO Habria que hacer un timer universal para cuadrarlo con el tiempo de invulnerabilidad
             if (fadeawaySlider.value < slider.value) {
                 fadeawaySlider.value = slider.value;
             }

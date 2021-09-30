@@ -7,6 +7,7 @@ public class MaskmanMovement : MonoBehaviour
     [Header("Variables")]
     public float speed;
     public float jumpForce = 2f;
+    //public float jumpForce2 = 0.01f;
 
     [Header("Pivotes del personaje")]
     public GameObject pivBI;    //Pivotes Bottom
@@ -18,8 +19,9 @@ public class MaskmanMovement : MonoBehaviour
     private float horizontal;
     private float defaultSpeed = 5f;
     private float rayLengthB = 0.1f; //Rayo de los pivotes de abajo
-    private float rayLengthW = 0.1f; //Rayo de los pivotes de pared
+    private float rayLengthW = 0.05f; //Rayo de los pivotes de pared
     private bool grounded;  //Controla si el personaje esta en el suelo
+    private bool canDecelerate;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,7 @@ public class MaskmanMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+
         /*
         Debug.DrawRay(pivBD.transform.position, Vector3.down * rayLengthB, Color.red); 
         Debug.DrawRay(pivBI.transform.position, Vector3.down * rayLengthB, Color.red);
@@ -40,21 +43,29 @@ public class MaskmanMovement : MonoBehaviour
         Debug.DrawRay(pivTI.transform.position, Vector3.left * rayLengthW, Color.red);
         */
 
-        if (Physics2D.Raycast(pivBD.transform.position, Vector3.down, rayLengthB)|| (Physics2D.Raycast(pivBI.transform.position, Vector3.down, rayLengthB) )) //Si colisionan los rayos con algun terreno
+        if (Physics2D.Raycast(pivBD.transform.position, Vector3.down, rayLengthB)|| (Physics2D.Raycast(pivBI.transform.position, Vector3.down, rayLengthB) )) //Si colisionan los rayos con algun terreno del suelo
         {
             grounded = true;
             SetDefaultSpeed();
+            canDecelerate = true;
         }
         else
         {
             grounded = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded){
-
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        {
             Jump();
         }
+
         CheckWallGrip();
+
+        if (Input.GetKeyUp(KeyCode.Space) && !grounded && canDecelerate)
+        {
+            Decelerate();
+            canDecelerate = false;
+        }
     }
 
     private void FixedUpdate() //Update que no depende de los fps
@@ -64,7 +75,12 @@ public class MaskmanMovement : MonoBehaviour
 
     private void Jump()
     {
-        Rigidbody2D.AddForce(Vector2.up * jumpForce);
+            Rigidbody2D.AddForce(Vector2.up * jumpForce);
+    }
+
+    private void Decelerate()
+    {
+        Rigidbody2D.velocity = Vector2.zero;
     }
 
     private void CheckWallGrip() //Comprueba si el jugador colisiona con la pared

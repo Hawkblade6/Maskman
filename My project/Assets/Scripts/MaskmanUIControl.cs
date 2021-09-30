@@ -5,16 +5,25 @@ using UnityEngine;
 public class MaskmanUIControl : MonoBehaviour
 {
     public HealthBar healthBar;
-    public int maxHealth = 100;
+    public StaminaBar staminaBar;   
+    public int maxHealth = 100;             //TODO leer de guardado
     public int minHealth = 0;
     public int currentHealth;
     public int healingPower = 30;
+    public int maxStamina = 100;
+    public int currentStamina;
+    public int minStamina = 0;
+
+    //private bool staminaControl = false;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        currentStamina = maxStamina;
+        staminaBar.SetMaxStamina(maxStamina);
+        
     }
 
     // Update is called once per frame
@@ -27,6 +36,14 @@ public class MaskmanUIControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             Cure(healingPower);
+        }
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            TakeStamina(20);
+        }
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            TakeStamina(30);
         }
 
     }
@@ -55,4 +72,17 @@ public class MaskmanUIControl : MonoBehaviour
             healthBar.SetHealth(currentHealth);
         }
     }
+
+    private void TakeStamina(int stamina) 
+    {
+        currentStamina -= stamina;
+
+        if (currentStamina < minStamina) 
+        {
+            currentStamina = minStamina;
+        }
+
+        staminaBar.SetStamina(currentStamina);
+    }
+
 }
