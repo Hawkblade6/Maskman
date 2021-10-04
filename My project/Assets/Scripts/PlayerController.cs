@@ -9,11 +9,15 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float jumpSpeed;
     public float fallSpeed;
-    
+    public float dashSpeed;
+    public float dashTime;
+    public float dashInterval;
+
+    private int maxJumps = 2;
     private bool _isGrounded;
     private bool _isClimb;
-    private bool _isSprintable;
-    private bool _isSprintReset;
+    private bool _isDasheable;
+    private bool _isDashReset;
     private bool _isInputEnabled;
     private bool _isFalling;
     private bool _isAttackable;
@@ -28,7 +32,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _isInputEnabled = true;
-        _isSprintReset = true;
+        _isDashReset = true;
         _isAttackable = true;
 
         //_animator = gameObject.GetComponent<Animator>();
@@ -47,8 +51,8 @@ public class PlayerController : MonoBehaviour
             Move();
             JumpControl();
             FallControl();
-            //sprintControl();
-            //attackControl();
+            DashControl();
+            //AttackControl();
         }
     }
 
@@ -67,15 +71,15 @@ public class PlayerController : MonoBehaviour
             //_animator.ResetTrigger("IsJumpSecond");
             //_animator.SetBool("IsDown", false);
 
-            jumpsLeft = 1;
+            jumpsLeft = maxJumps;
             _isClimb = false;
-            _isSprintable = true;
+            _isDasheable = true;
             
         }
         else if (_isClimb)
         {
             // one remaining jump chance after climbing
-            jumpsLeft = 1;
+            jumpsLeft = maxJumps - 1;
         }
     }
 
@@ -206,5 +210,49 @@ public class PlayerController : MonoBehaviour
         newVelocity.y = -fallSpeed;
 
         rigidbody.velocity = newVelocity;
+    }
+
+    private void DashControl()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && _isDasheable && _isDashReset)
+            Dash();
+    }
+
+    private void Dash()
+    {
+        // reject input during sprinting
+        _isInputEnabled = false;
+        _isDasheable = false;
+        _isDashReset = false;
+
+        Vector2 newVelocity;
+        newVelocity.x = transform.localScale.x * (_isClimb ? dashSpeed : -dashSpeed);
+        newVelocity.y = 0;
+
+        rigidbody.velocity = newVelocity;
+
+        if (_isClimb)
+        {
+            // sprint to the opposite direction
+            Vector3 newScale;
+            newScale.x = -transform.localScale.x;
+            newScale.y = 1;
+            newScale.z = 1;
+
+            transform.localScale = newScale;
+        }
+
+        //_animator.SetTrigger("IsSprint");
+        StartCoroutine(DashCoroutine(dashTime, dashInterval));
+    }
+
+    private IEnumerator DashCoroutine(float dashDelay, float dashInterval)
+    {
+        yield return new WaitForSeconds(dashDelay);
+        _isInputEnabled = true;
+        _isDasheable = true;
+
+        yield return new WaitForSeconds(dashInterval);
+        _isDashReset = true;
     }
 }
