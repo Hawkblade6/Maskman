@@ -10,9 +10,9 @@ public class MaskmanUIControl : MonoBehaviour
     public int minHealth = 0;
     public int currentHealth;
     public int healingPower = 30;
-    public int maxStamina = 100;
-    public int currentStamina;
-    public int minStamina = 0;
+    //public int maxStamina = 100;
+    //public int currentStamina;
+    //public int minStamina = 0;
 
     //private bool staminaControl = false;
 
@@ -21,8 +21,8 @@ public class MaskmanUIControl : MonoBehaviour
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-        currentStamina = maxStamina;
-        staminaBar.SetMaxStamina(maxStamina);
+        //currentStamina = maxStamina;
+        //staminaBar.SetMaxStamina(maxStamina);
         
     }
 
@@ -39,11 +39,11 @@ public class MaskmanUIControl : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0)) 
         {
-            TakeStamina(20);
+            // ataque
         }
         if (Input.GetMouseButtonDown(1)) 
         {
-            TakeStamina(30);
+           //esquive
         }
 
     }
@@ -73,16 +73,16 @@ public class MaskmanUIControl : MonoBehaviour
         }
     }
 
-    private void TakeStamina(int stamina) 
-    {
-        currentStamina -= stamina;
+    //private void TakeStamina(int stamina) 
+    //{
+    //    currentStamina -= stamina;
 
-        if (currentStamina < minStamina) 
-        {
-            currentStamina = minStamina;
-        }
+    //    if (currentStamina < minStamina) 
+    //    {
+    //        currentStamina = minStamina;
+    //    }
 
-        staminaBar.SetStamina(currentStamina);
-    }
+    //    staminaBar.SetStamina(currentStamina);
+    //}
 
 }

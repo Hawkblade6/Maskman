@@ -9,47 +9,58 @@ public class StaminaBar : MonoBehaviour
     public Slider slider;
     public TextMeshProUGUI texto;
 
-    private bool staminaControl = false;
+    //private void Update()
+    //{
+        
+        
+    //        this.stamina = (1 / staminaRegenerationRate) * Time.deltaTime;
+        
+    //    this.stamina = Mathf.Clamp01(this.stamina);
+    //}
 
-    public void SetMaxStamina(int stamina) //Establece el aguante maxima
-    {
-        slider.maxValue = stamina;
-        slider.value = stamina;
-        texto.text = slider.value + " / " + slider.maxValue;
-    }
+    //private bool staminaControl = false;
 
-    public void SetStamina(int stamina) //Establece el aguante actual
-    {
+    //public void SetMaxStamina(int stamina) //Establece el aguante maxima
+    //{
+    //    slider.maxValue = stamina;
+    //    slider.value = stamina;
+    //    texto.text = slider.value + " / " + slider.maxValue;
+    //}
 
-        if (stamina < slider.value)
-        {
-            slider.value = stamina;
-            texto.text = slider.value + " / " + slider.maxValue;
-            //StartCoroutine(FadeawayHealthBar(stamina));
-        }
+    //public void SetStamina(int stamina) //Establece el aguante actual
+    //{
 
-        if (stamina > slider.value)
-        {
-            slider.value = stamina;
-            texto.text = slider.value + " / " + slider.maxValue;
-        }
+    //    if (stamina < slider.value)
+    //    {
+    //        slider.value = stamina;
+    //        texto.text = slider.value + " / " + slider.maxValue;
+    //        //StartCoroutine(FadeawayHealthBar(stamina));
+    //    }
 
-    }
+    //    if (stamina > slider.value)
+    //    {
+    //        slider.value = stamina;
+    //        texto.text = slider.value + " / " + slider.maxValue;
+    //    }
 
-    public float GetStamina()
-    {
-        return slider.value;
-    }
+    //}
 
-    IEnumerator RegainStamina()
-    {
-        yield return new WaitForSeconds(1f);
+    //public float GetStamina()
+    //{
+    //    return slider.value;
+    //}
 
-        while (staminaControl && GetStamina() > 4)
-        {
+    //public void RegainStaminaMethod() { }
 
+    //IEnumerator RegainStamina()
+    //{
+    //    yield return new WaitForSeconds(1f);
 
-        }
+    //    while (staminaControl && GetStamina() < 4)
+    //    {
+    //        Debug.Log("1");
 
-    }
+    //    }
+
+    //}
 }
