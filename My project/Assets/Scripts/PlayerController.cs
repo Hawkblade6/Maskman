@@ -8,13 +8,15 @@ public class PlayerController : MonoBehaviour
     public int jumpsLeft;
     public float moveSpeed;
     public float jumpSpeed;
-    public float fallSpeed;
+    //public float fallSpeed;
     public float dashSpeed;
     public float dashTime;
     public float dashInterval;
 
-    private int maxJumps = 2;
+    private int maxJumps = 1;
+    private int gravity = 2;
     private bool _isGrounded;
+    private bool _canClimb;
     private bool _isClimb;
     private bool _isDasheable;
     private bool _isDashReset;
@@ -89,10 +91,21 @@ public class PlayerController : MonoBehaviour
         float horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed;
 
         // set velocity
+        //Rigidbody2D.velocity = new Vector2(horizontal * speed, Rigidbody2D.velocity.y);
         Vector2 newVelocity;
         newVelocity.x = horizontalMovement;
         newVelocity.y = rigidbody.velocity.y;
         rigidbody.velocity = newVelocity;
+
+        if (Input.GetKeyUp(KeyCode.A)) //Solucion para control por teclado
+        {
+            rigidbody.AddForce(Vector2.right);
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            newVelocity.x = 0;
+            rigidbody.velocity = newVelocity;
+        }
 
         if (!_isClimb)
         {
@@ -134,6 +147,36 @@ public class PlayerController : MonoBehaviour
             //_animator.ResetTrigger("stopTrigger");
         }
     }
+    //void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawSphere(transform.position, 0.7f);
+
+    //}
+
+    private bool CheckWallCollision() 
+    {
+        Vector2 origin = transform.position;
+
+        // detect sides
+        Vector2 directionLeft;
+        directionLeft.x = -1;
+        directionLeft.y = 0;
+
+        Vector2 directionRight;
+        directionRight.x = 1;
+        directionRight.y = 0;
+
+        float distance = 0.6f;
+        LayerMask layerMask = LayerMask.GetMask("Plataforma");
+
+        RaycastHit2D hitRecL = Physics2D.Raycast(origin, directionLeft, distance);
+        RaycastHit2D hitRecR = Physics2D.Raycast(origin, directionRight, distance);
+
+        
+        return (hitRecL.collider != null || hitRecR.collider != null);
+
+    }
 
     private bool IsGrounded()
     {
@@ -161,13 +204,14 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (_isClimb) 
+        if (_isClimb)
         {
             //ClimbJump();
         }
-            
         else if (jumpsLeft > 0)
+        {
             Jump();
+        }
     }
 
     private void Jump()
@@ -207,14 +251,14 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 newVelocity;
         newVelocity.x = rigidbody.velocity.x;
-        newVelocity.y = -fallSpeed;
+        newVelocity.y = 0;
 
         rigidbody.velocity = newVelocity;
     }
 
     private void DashControl()
     {
-        if (Input.GetKeyDown(KeyCode.K) && _isDasheable && _isDashReset)
+        if (Input.GetButtonDown("Dash") && _isDasheable && _isDashReset)
             Dash();
     }
 
@@ -226,7 +270,7 @@ public class PlayerController : MonoBehaviour
         _isDashReset = false;
 
         Vector2 newVelocity;
-        newVelocity.x = transform.localScale.x * (_isClimb ? dashSpeed : -dashSpeed);
+        newVelocity.x = transform.localScale.x * (_isClimb ? dashSpeed : -dashSpeed); // por ahora no me preocupo porque ira relacionado con el animator
         newVelocity.y = 0;
 
         rigidbody.velocity = newVelocity;
@@ -244,6 +288,7 @@ public class PlayerController : MonoBehaviour
 
         //_animator.SetTrigger("IsSprint");
         StartCoroutine(DashCoroutine(dashTime, dashInterval));
+        rigidbody.gravityScale = 0;
     }
 
     private IEnumerator DashCoroutine(float dashDelay, float dashInterval)
@@ -251,6 +296,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashDelay);
         _isInputEnabled = true;
         _isDasheable = true;
+        rigidbody.gravityScale = gravity;
 
         yield return new WaitForSeconds(dashInterval);
         _isDashReset = true;

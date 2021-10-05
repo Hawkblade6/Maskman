@@ -159,9 +159,8 @@ MonoBehaviour:
   jumpsLeft: 1
   moveSpeed: 7
   jumpSpeed: 15
-  fallSpeed: 6
-  dashSpeed: 12
-  dashTime: 1
+  dashSpeed: 30
+  dashTime: 0.2
   dashInterval: 0.4
 --- !u!61 &42748582
 BoxCollider2D:
@@ -172,7 +171,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 42748580}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: c392e016602151742b73eb1407552806, type: 2}
+  m_Material: {fileID: 6200000, guid: 627068773db71674588746d4b9a96f68, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
