@@ -7,6 +7,6 @@ public class Dialogue : MonoBehaviour
 
     private void Start()
     {
-        textLabel.text = "Hello!\nHow is it going?";
+        GetComponent<TypewriterEffect>().Run("Hello!\nMy name is Maskman.", textLabel);
     }
 }
