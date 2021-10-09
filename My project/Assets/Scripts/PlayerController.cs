@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     private bool _isInputEnabled;
     private bool _isFalling;
     private bool _isAttackable;
-
-    //private Animator _animator;
+    
+    private Animator _animator;
     private Rigidbody2D rigidbody;
     private Transform transform;
     //private SpriteRenderer _spriteRenderer;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         _isDashReset = true;
         _isAttackable = true;
 
-        //_animator = gameObject.GetComponent<Animator>();
+        _animator = gameObject.GetComponent<Animator>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         transform = gameObject.GetComponent<Transform>();
         //_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -158,6 +158,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 origin = transform.position;
 
+
+
         // detect sides
         Vector2 directionLeft;
         directionLeft.x = -1;
@@ -189,7 +191,7 @@ public class PlayerController : MonoBehaviour
         direction.x = 0;
         direction.y = -1;
 
-        float distance = 0.5f;
+        float distance = 3f;
         LayerMask layerMask = LayerMask.GetMask("Plataforma");
 
         RaycastHit2D hitRec = Physics2D.CircleCast(origin, radius, direction, distance, layerMask);
