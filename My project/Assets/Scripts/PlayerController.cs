@@ -15,40 +15,41 @@ public class PlayerController : MonoBehaviour
 
     private int maxJumps = 1;
     private int gravity = 2;
-    private bool _isGrounded;
+    private bool isGrounded;
+    private bool canJump;
     private bool _canClimb;
     private bool _isClimb;
-    private bool _isDasheable;
-    private bool _isDashReset;
-    private bool _isInputEnabled;
-    private bool _isFalling;
+    private bool canDash;
+    private bool dashreset;
+    private bool isInputEnabled;
+    private bool isFalling;
     private bool _isAttackable;
     
-    private Animator _animator;
-    private Rigidbody2D rigidbody;
-    private Transform transform;
+    private Animator animator;
+    private Rigidbody2D rigidb;
+    private Transform transf;
     //private SpriteRenderer _spriteRenderer;
-    private BoxCollider2D _boxCollider;
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        _isInputEnabled = true;
-        _isDashReset = true;
+        isInputEnabled = true;
+        dashreset = true;
         _isAttackable = true;
 
-        _animator = gameObject.GetComponent<Animator>();
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        transform = gameObject.GetComponent<Transform>();
+        animator = gameObject.GetComponent<Animator>();
+        rigidb = gameObject.GetComponent<Rigidbody2D>();
+        transf = gameObject.GetComponent<Transform>();
         //_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        _boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdatePlayerState();
-        if (_isInputEnabled)
+        if (isInputEnabled)
         {
             Move();
             JumpControl();
@@ -60,13 +61,15 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePlayerState()
     {
-        _isGrounded = IsGrounded();
+        isGrounded = IsGrounded();
+        canJump = isGrounded;
+
         //_animator.SetBool("IsGround", _isGrounded);
 
-        float verticalVelocity = rigidbody.velocity.y;
+        float verticalVelocity = rigidb.velocity.y;
         //_animator.SetBool("IsDown", verticalVelocity < 0);
 
-        if (_isGrounded && verticalVelocity == 0)
+        if (isGrounded && verticalVelocity == 0)
         {
             //_animator.SetBool("IsJump", false);
             //_animator.ResetTrigger("IsJumpFirst");
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
             jumpsLeft = maxJumps;
             _isClimb = false;
-            _isDasheable = true;
+            canDash = true;
             
         }
         else if (_isClimb)
@@ -94,44 +97,54 @@ public class PlayerController : MonoBehaviour
         //Rigidbody2D.velocity = new Vector2(horizontal * speed, Rigidbody2D.velocity.y);
         Vector2 newVelocity;
         newVelocity.x = horizontalMovement;
-        newVelocity.y = rigidbody.velocity.y;
-        rigidbody.velocity = newVelocity;
+        newVelocity.y = rigidb.velocity.y;
+        rigidb.velocity = newVelocity;
 
-        if (Input.GetKeyUp(KeyCode.A)) //Solucion para control por teclado
+        if (Input.GetKeyDown(KeyCode.A)) //Solucion para control por teclado
         {
-            rigidbody.AddForce(Vector2.right);
+            rigidb.AddForce(Vector2.right);
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             newVelocity.x = 0;
-            rigidbody.velocity = newVelocity;
+            rigidb.velocity = newVelocity;
         }
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) // Sigue deslizandose aunque se deje de pulsar la tecla <---- solucionar?
+        {
+            Debug.Log("ad");
+            newVelocity.x = 0;
+            rigidb.velocity = newVelocity;
+            Debug.Log(rigidb.velocity);
+        }
+        
+
+
 
         if (!_isClimb)
         {
-            // the sprite itself is inversed 
-            float moveDirection = -base.transform.localScale.x * horizontalMovement;
+             
+            float moveDirection = base.transform.localScale.x * horizontalMovement;
 
             if (moveDirection < 0)
             {
-                // flip player sprite
-                //Vector3 newScale;
-                //newScale.x = horizontalMovement < 0 ? 1 : -1;
-                //newScale.y = 1;
-                //newScale.z = 1;
+                // girar el sprite
+                Vector3 newScale;
+                newScale.x = horizontalMovement < 0 ? -1 : 1;
+                newScale.y = 1;
+                newScale.z = 1;
 
-                //transform.localScale = newScale;
+                transf.localScale = newScale;
 
-                if (_isGrounded)
+                if (isGrounded)
                 {
                     // turn back animation
-                   // _animator.SetTrigger("IsRotate");
+                    //animator.SetTrigger("IsRotate");
                 }
             }
             else if (moveDirection > 0)
             {
                 // move forward
-               // _animator.SetBool("IsRun", true);
+                //animator.SetBool("IsRun", true);
             }
         }
 
@@ -147,42 +160,43 @@ public class PlayerController : MonoBehaviour
             //_animator.ResetTrigger("stopTrigger");
         }
     }
-    //void OnDrawGizmosSelected()
+
+    //void OnDrawGizmosSelected()       
     //{
     //    Gizmos.color = Color.yellow;
     //    Gizmos.DrawSphere(transform.position, 0.7f);
 
     //}
 
-    private bool CheckWallCollision() 
-    {
-        Vector2 origin = transform.position;
+    //private bool CheckWallCollision() 
+    //{
+    //    Vector2 origin = transform.position;
 
 
 
-        // detect sides
-        Vector2 directionLeft;
-        directionLeft.x = -1;
-        directionLeft.y = 0;
+    //    // detect sides
+    //    Vector2 directionLeft;
+    //    directionLeft.x = -1;
+    //    directionLeft.y = 0;
 
-        Vector2 directionRight;
-        directionRight.x = 1;
-        directionRight.y = 0;
+    //    Vector2 directionRight;
+    //    directionRight.x = 1;
+    //    directionRight.y = 0;
 
-        float distance = 0.6f;
-        LayerMask layerMask = LayerMask.GetMask("Plataforma");
+    //    float distance = 0.6f;
+    //    LayerMask layerMask = LayerMask.GetMask("Plataforma");
 
-        RaycastHit2D hitRecL = Physics2D.Raycast(origin, directionLeft, distance);
-        RaycastHit2D hitRecR = Physics2D.Raycast(origin, directionRight, distance);
+    //    RaycastHit2D hitRecL = Physics2D.Raycast(origin, directionLeft, distance);
+    //    RaycastHit2D hitRecR = Physics2D.Raycast(origin, directionRight, distance);
 
         
-        return (hitRecL.collider != null || hitRecR.collider != null);
+    //    return (hitRecL.collider != null || hitRecR.collider != null);
 
-    }
+    //}
 
     private bool IsGrounded()
     {
-        Vector2 origin = transform.position;
+        Vector2 origin = transf.position;
 
         float radius = 0.2f;
 
@@ -191,7 +205,7 @@ public class PlayerController : MonoBehaviour
         direction.x = 0;
         direction.y = -1;
 
-        float distance = 3f;
+        float distance = 0.6f;
         LayerMask layerMask = LayerMask.GetMask("Plataforma");
 
         RaycastHit2D hitRec = Physics2D.CircleCast(origin, radius, direction, distance, layerMask);
@@ -212,95 +226,104 @@ public class PlayerController : MonoBehaviour
         }
         else if (jumpsLeft > 0)
         {
+            
             Jump();
         }
     }
 
     private void Jump()
     {
-        Vector2 newVelocity;
-        newVelocity.x = rigidbody.velocity.x;
-        newVelocity.y = jumpSpeed;
-
-        rigidbody.velocity = newVelocity;
-
-        //_animator.SetBool("IsJump", true);
-        jumpsLeft -= 1;
-        if (jumpsLeft == 0)
+        if (canJump)
         {
-            //_animator.SetTrigger("IsJumpSecond");
-        }
-        else if (jumpsLeft == 1)
-        {
-            //_animator.SetTrigger("IsJumpFirst");
-        }
+            Vector2 newVelocity;
+            newVelocity.x = rigidb.velocity.x;
+            newVelocity.y = jumpSpeed;
+
+            rigidb.velocity = newVelocity;
+
+            //_animator.SetBool("IsJump", true);
+            jumpsLeft -= 1;
+            if (jumpsLeft == 0)
+            {
+                //_animator.SetTrigger("IsJumpSecond");
+            }
+            else if (jumpsLeft == 1)
+            {
+                //_animator.SetTrigger("IsJumpFirst");
+            }
+        }   
     }
 
     private void FallControl()
     {
-        if (Input.GetButtonUp("Jump") && !_isClimb)
+        if (rigidb.velocity.y < 0)
         {
-            _isFalling = true;
+            isFalling = true;
+        }
+
+        if (Input.GetButtonUp("Jump") && !_isClimb && !isFalling)
+        {
+            isFalling = true;
             Fall();
         }
-        else
+        else if(isGrounded)
         {
-            _isFalling = false;
+            isFalling = false;
         }
     }
 
     private void Fall()
     {
         Vector2 newVelocity;
-        newVelocity.x = rigidbody.velocity.x;
+        newVelocity.x = rigidb.velocity.x;
         newVelocity.y = 0;
 
-        rigidbody.velocity = newVelocity;
+        rigidb.velocity = newVelocity;
     }
 
     private void DashControl()
     {
-        if (Input.GetButtonDown("Dash") && _isDasheable && _isDashReset)
+        if (Input.GetButtonDown("Dash") && canDash && dashreset)
             Dash();
     }
 
     private void Dash()
     {
         // reject input during sprinting
-        _isInputEnabled = false;
-        _isDasheable = false;
-        _isDashReset = false;
+        isInputEnabled = false;
+        canDash = false;
+        dashreset = false;
 
         Vector2 newVelocity;
-        newVelocity.x = transform.localScale.x * (_isClimb ? dashSpeed : -dashSpeed); // por ahora no me preocupo porque ira relacionado con el animator
+        newVelocity.x = transf.localScale.x * (_isClimb ? -dashSpeed : dashSpeed); 
         newVelocity.y = 0;
 
-        rigidbody.velocity = newVelocity;
+        rigidb.velocity = newVelocity;
 
         if (_isClimb)
         {
-            // sprint to the opposite direction
+            // dash en direccion contraria
             Vector3 newScale;
-            newScale.x = -transform.localScale.x;
+            newScale.x = -transf.localScale.x;
             newScale.y = 1;
             newScale.z = 1;
 
-            transform.localScale = newScale;
+            transf.localScale = newScale;
         }
 
         //_animator.SetTrigger("IsSprint");
         StartCoroutine(DashCoroutine(dashTime, dashInterval));
-        rigidbody.gravityScale = 0;
+        rigidb.gravityScale = 0;
     }
 
     private IEnumerator DashCoroutine(float dashDelay, float dashInterval)
     {
         yield return new WaitForSeconds(dashDelay);
-        _isInputEnabled = true;
-        _isDasheable = true;
-        rigidbody.gravityScale = gravity;
+        isInputEnabled = true;
+        canDash = true;
+        rigidb.gravityScale = gravity;
 
         yield return new WaitForSeconds(dashInterval);
-        _isDashReset = true;
+        dashreset = true;
     }
 }
