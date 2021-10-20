@@ -64,14 +64,14 @@ public class PlayerController : MonoBehaviour
         isGrounded = IsGrounded();
         canJump = isGrounded;
 
-        //_animator.SetBool("IsGround", _isGrounded);
+        animator.SetBool("IsGround", isGrounded);
 
         float verticalVelocity = rigidb.velocity.y;
         //_animator.SetBool("IsDown", verticalVelocity < 0);
 
         if (isGrounded && verticalVelocity == 0)
         {
-            //_animator.SetBool("IsJump", false);
+            animator.SetBool("IsJump", false);
             //_animator.ResetTrigger("IsJumpFirst");
             //_animator.ResetTrigger("IsJumpSecond");
             //_animator.SetBool("IsDown", false);
@@ -143,8 +143,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (moveDirection > 0)
             {
-                // move forward
-                //animator.SetBool("IsRun", true);
+                animator.SetBool("IsRun", true);
             }
         }
 
@@ -153,7 +152,7 @@ public class PlayerController : MonoBehaviour
         {
             //_animator.SetTrigger("stopTrigger");
             //_animator.ResetTrigger("IsRotate");
-            //_animator.SetBool("IsRun", false);
+            animator.SetBool("IsRun", false);
         }
         else
         {
@@ -302,7 +301,7 @@ public class PlayerController : MonoBehaviour
 
         if (_isClimb)
         {
-            // dash en direccion contraria
+            // opposite side dash
             Vector3 newScale;
             newScale.x = -transf.localScale.x;
             newScale.y = 1;
