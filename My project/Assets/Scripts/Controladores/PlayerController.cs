@@ -116,7 +116,20 @@ public class PlayerController : MonoBehaviour
             rigidb.velocity = newVelocity;
             Debug.Log(rigidb.velocity);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SaveSystem.SavePlayer(this);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            PlayerData data = SaveSystem.LoadPlayer();
+            Vector2 pos;
+            pos.x = data.position[0];
+            pos.y = data.position[1];
+            transform.position = pos;
+        }
+
 
 
 
