@@ -67,14 +67,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsGround", isGrounded);
 
         float verticalVelocity = rigidb.velocity.y;
-        //_animator.SetBool("IsDown", verticalVelocity < 0);
+        animator.SetBool("IsDown", verticalVelocity < 0);
 
         if (isGrounded && verticalVelocity == 0)
         {
             animator.SetBool("IsJump", false);
             //_animator.ResetTrigger("IsJumpFirst");
             //_animator.ResetTrigger("IsJumpSecond");
-            //_animator.SetBool("IsDown", false);
+            animator.SetBool("IsDown", false);
 
             jumpsLeft = maxJumps;
             _isClimb = false;
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
         newVelocity.y = rigidb.velocity.y;
         rigidb.velocity = newVelocity;
 
-        if (Input.GetKeyDown(KeyCode.A)) //Solucion para control por teclado
+        if (Input.GetKeyDown(KeyCode.A)) //Control por teclado
         {
             rigidb.AddForce(Vector2.right);
         }
@@ -117,18 +117,18 @@ public class PlayerController : MonoBehaviour
             Debug.Log(rigidb.velocity);
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SaveSystem.SavePlayer(this);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            PlayerData data = SaveSystem.LoadPlayer();
-            Vector2 pos;
-            pos.x = data.position[0];
-            pos.y = data.position[1];
-            transform.position = pos;
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    SaveSystem.SavePlayer(this);
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    PlayerData data = SaveSystem.LoadPlayer();
+        //    Vector2 pos;
+        //    pos.x = data.position[0];
+        //    pos.y = data.position[1];
+        //    transform.position = pos;
+        //}
 
 
 
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
             rigidb.velocity = newVelocity;
 
-            //_animator.SetBool("IsJump", true);
+            animator.SetBool("IsJump", true);
             jumpsLeft -= 1;
             if (jumpsLeft == 0)
             {
@@ -286,6 +286,8 @@ public class PlayerController : MonoBehaviour
 
     private void Fall()
     {
+
+        animator.SetBool("IsDown", true);
         Vector2 newVelocity;
         newVelocity.x = rigidb.velocity.x;
         newVelocity.y = 0;
@@ -323,7 +325,7 @@ public class PlayerController : MonoBehaviour
             transf.localScale = newScale;
         }
 
-        //_animator.SetTrigger("IsSprint");
+        animator.SetTrigger("IsSprint");
         StartCoroutine(DashCoroutine(dashTime, dashInterval));
         rigidb.gravityScale = 0;
     }
