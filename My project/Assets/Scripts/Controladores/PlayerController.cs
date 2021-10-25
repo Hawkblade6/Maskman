@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool isInputEnabled;
     private bool isFalling;
     private bool _isAttackable;
+    private bool talking;
     
     private Animator animator;
     private Rigidbody2D rigidb;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         isInputEnabled = true;
         dashreset = true;
         _isAttackable = true;
+        talking = false;
 
         animator = gameObject.GetComponent<Animator>();
         rigidb = gameObject.GetComponent<Rigidbody2D>();
@@ -111,10 +113,8 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) // Sigue deslizandose aunque se deje de pulsar la tecla <---- solucionar?
         {
-            Debug.Log("ad");
             newVelocity.x = 0;
             rigidb.velocity = newVelocity;
-            Debug.Log(rigidb.velocity);
         }
 
         //if (Input.GetKeyDown(KeyCode.P))
@@ -339,5 +339,18 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(dashInterval);
         dashreset = true;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "NPC")
+        {
+            Debug.Log(Input.GetButtonDown("Interact"));
+            if (Input.GetButtonDown("Interact"))
+            {
+                Debug.Log("Soy un NPC, hola");
+
+            }
+        }
     }
 }
