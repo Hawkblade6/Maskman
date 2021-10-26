@@ -8,10 +8,12 @@ public class Dialogue : MonoBehaviour
     [SerializeField] private TMP_Text textLabel;
     [SerializeField] private DialogueObject testDialogue;
 
+    private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
     private void Start()
     {
         typewriterEffect = GetComponent<TypewriterEffect>();
+        responseHandler = GetComponent<ResponseHandler>();
         CloseDialogueBox();
         ShowDialogue(testDialogue);
     }
@@ -24,15 +26,25 @@ public class Dialogue : MonoBehaviour
 
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject) 
     {
-        yield return new WaitForSeconds(2);
-
-        foreach (string dialogue in dialogueObject.Dialogue)
+        for (int i = 0; i < dialogueObject.Dialogue.Length; i++) 
         {
+            string dialogue = dialogueObject.Dialogue[i];
             yield return typewriterEffect.Run(dialogue, textLabel);
+
+            if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
+
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
         }
 
-        CloseDialogueBox();
+        if (dialogueObject.HasResponses)
+        {
+            responseHandler.ShowResponses(dialogueObject.Responses);
+        }
+        else
+        {
+            CloseDialogueBox();
+        }
+        
     }
 
     private void CloseDialogueBox() 
