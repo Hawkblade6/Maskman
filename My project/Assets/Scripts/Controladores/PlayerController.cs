@@ -24,8 +24,9 @@ public class PlayerController : MonoBehaviour
     private bool isInputEnabled;
     private bool isFalling;
     private bool _isAttackable;
-    private bool talking;
-    
+
+    private bool npc;
+
     private Animator animator;
     private Rigidbody2D rigidb;
     private Transform transf;
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour
         isInputEnabled = true;
         dashreset = true;
         _isAttackable = true;
-        talking = false;
 
         animator = gameObject.GetComponent<Animator>();
         rigidb = gameObject.GetComponent<Rigidbody2D>();
@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
             JumpControl();
             FallControl();
             DashControl();
+            SceneElemControl();
             //AttackControl();
         }
     }
@@ -341,16 +342,43 @@ public class PlayerController : MonoBehaviour
         dashreset = true;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (Input.GetButtonDown("Interact") && collision.tag == "NPC")
+    //    {
+    //            Debug.Log("Soy un NPC, hola");
+    //    }
+    //}
+
+    private void SceneElemControl() 
+    {
+        if (npc) 
+        {
+            if (Input.GetButtonDown("Interact")) 
+            {
+                // SISTEMA DE DIALOGOS
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "NPC")
         {
-            Debug.Log(Input.GetButtonDown("Interact"));
-            if (Input.GetButtonDown("Interact"))
-            {
-                Debug.Log("Soy un NPC, hola");
+            npc = true;
+        }
+        if (collision.tag == "PowerUp")
+        {
+            // Aplicar Efectos
+            Destroy(collision.gameObject);
+        }
+    }
 
-            }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "NPC")
+        {
+            npc = false;
         }
     }
 }
