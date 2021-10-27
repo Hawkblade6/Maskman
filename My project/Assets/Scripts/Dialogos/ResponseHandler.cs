@@ -9,6 +9,8 @@ public class ResponseHandler : MonoBehaviour
     [SerializeField] private RectTransform responseButtonTemplate;
     [SerializeField] private RectTransform responseContainer;
 
+    public GameObject dialogueResponse;
+
     private Dialogue dialogue;
 
     List<GameObject> tempResponseButtons = new List<GameObject>();
@@ -20,6 +22,8 @@ public class ResponseHandler : MonoBehaviour
 
     public void ShowResponses(Response[] responses) 
     {
+        dialogueResponse.SetActive(true);
+
         float responseBoxHeight = 0;
 
         foreach (Response response in responses) 
@@ -47,5 +51,7 @@ public class ResponseHandler : MonoBehaviour
         tempResponseButtons.Clear();
 
         dialogue.ShowDialogue(response.DialogueObject);
+
+        dialogueResponse.SetActive(false);
     }
 }
