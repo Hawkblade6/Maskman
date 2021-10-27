@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Dialogue dialogue;
+
+    public Dialogue Dialogue => dialogue;
+
+    public Interactable Interactable { get; set; }
+
     public int health;
     public int jumpsLeft;
     public float moveSpeed;
@@ -62,6 +68,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdatePlayerState();
+
+        //evita que el personaje se mueva durante el diálogo
+        if (dialogue.IsOpen) return;
+
         if (isInputEnabled)
         {
             Move();
@@ -70,6 +80,14 @@ public class PlayerController : MonoBehaviour
             DashControl();
             SceneElemControl();
             //AttackControl();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Interactable != null)
+            {
+                Interactable.Interact(this);
+            }
         }
     }
 
