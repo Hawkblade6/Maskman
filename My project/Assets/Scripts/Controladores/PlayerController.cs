@@ -13,6 +13,11 @@ public class PlayerController : MonoBehaviour
     public float dashTime;
     public float dashInterval;
 
+    private AudioSource[] mySounds;
+    private AudioSource stepSound;
+    private AudioSource windSound;
+
+
     private int maxJumps = 1;
     private int gravity = 2;
     private bool isGrounded;
@@ -24,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool isInputEnabled;
     private bool isFalling;
     private bool _isAttackable;
+    private bool moving;
 
     private bool npc;
 
@@ -45,7 +51,12 @@ public class PlayerController : MonoBehaviour
         transf = gameObject.GetComponent<Transform>();
         //_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
-    }
+
+        mySounds = GetComponents<AudioSource>();
+
+        stepSound = mySounds[0];
+        windSound = mySounds[1]
+;    }
 
     // Update is called once per frame
     void Update()
@@ -167,10 +178,12 @@ public class PlayerController : MonoBehaviour
             //_animator.SetTrigger("stopTrigger");
             //_animator.ResetTrigger("IsRotate");
             animator.SetBool("IsRun", false);
+            moving = false;
         }
         else
         {
             //_animator.ResetTrigger("stopTrigger");
+            moving = true;
         }
     }
 
@@ -381,4 +394,32 @@ public class PlayerController : MonoBehaviour
             npc = false;
         }
     }
+
+
+    #region //music
+    private void StepSound() {
+
+        
+
+        if (moving)
+        {
+            stepSound.pitch = Random.Range(0.75f,1.2f);
+            stepSound.Play();
+        }
+        else {
+            stepSound.Stop();
+        }
+    }
+
+    private void WindSound() {
+
+        windSound = GetComponent<AudioSource>();
+
+        windSound.Play();
+    }
+
+
+    
+
+    #endregion
 }
