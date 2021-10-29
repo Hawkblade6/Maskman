@@ -159,6 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 53973820}
+  dia: {fileID: 53973820}
+  obj: {fileID: 11400000, guid: affd87bee2f011e4c81d35d3a2d3efca, type: 2}
   health: 0
   jumpsLeft: 1
   moveSpeed: 4
@@ -272,7 +274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42748580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.07958, y: 6.32, z: 0}
+  m_LocalPosition: {x: -1164.3828, y: -23.145552, z: 0}
   m_LocalScale: {x: 1.00264, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
@@ -1025,7 +1027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574745732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.95383674, y: -0.7347341, z: -14.386998}
+  m_LocalPosition: {x: -1161.3494, y: -30.200285, z: -14.386998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 799306208}
@@ -1535,7 +1537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880175935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6967633, y: 4.365551, z: -3.4137666}
+  m_LocalPosition: {x: -1163, y: -25.1, z: -3.4137666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1633541090}
@@ -2795,8 +2797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2856,7 +2858,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278519045
-  m_fontColor: {r: 0.01886791, g: 0.018422913, b: 0.018422913, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

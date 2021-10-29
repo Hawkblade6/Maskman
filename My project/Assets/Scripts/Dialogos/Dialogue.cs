@@ -8,7 +8,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] private TMP_Text textLabel;
     //[SerializeField] private DialogueObject testDialogue;
 
-    public bool IsOpen { get; private set; }
+    //public bool IsOpen { get; private set; }
 
     private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
@@ -36,7 +36,7 @@ public class Dialogue : MonoBehaviour
 
             if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
 
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
+            yield return new WaitUntil(() => Input.GetButtonDown("Interact"));
         }
 
         if (dialogueObject.HasResponses)
@@ -50,9 +50,10 @@ public class Dialogue : MonoBehaviour
         
     }
 
-    private void CloseDialogueBox() 
+    public void CloseDialogueBox() 
     {
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;
+        responseHandler.DestroyResponses();
     }
 }

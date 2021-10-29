@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
 
     public Interactable Interactable { get; set; }
 
+    public Dialogue dia;
+    public DialogueObject obj;
+
     public int health;
     public int jumpsLeft;
     public float moveSpeed;
@@ -69,9 +72,6 @@ public class PlayerController : MonoBehaviour
     {
         UpdatePlayerState();
 
-        //evita que el personaje se mueva durante el diálogo
-        if (dialogue.IsOpen) return;
-
         if (isInputEnabled)
         {
             Move();
@@ -80,14 +80,6 @@ public class PlayerController : MonoBehaviour
             DashControl();
             SceneElemControl();
             //AttackControl();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (Interactable != null)
-            {
-                Interactable.Interact(this);
-            }
         }
     }
 
@@ -141,7 +133,7 @@ public class PlayerController : MonoBehaviour
             newVelocity.x = 0;
             rigidb.velocity = newVelocity;
         }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) // Sigue deslizandose aunque se deje de pulsar la tecla <---- solucionar?
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) 
         {
             newVelocity.x = 0;
             rigidb.velocity = newVelocity;
@@ -387,7 +379,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetButtonDown("Interact")) 
             {
-                // SISTEMA DE DIALOGOS
+                npc = false;
+                //Interactable.Interact(this);
+                dia.ShowDialogue(obj);
             }
         }
     }
@@ -410,6 +404,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "NPC")
         {
             npc = false;
+            dia.CloseDialogueBox();
         }
     }
 
@@ -435,9 +430,6 @@ public class PlayerController : MonoBehaviour
 
         windSound.Play();
     }
-
-
-    
 
     #endregion
 }
