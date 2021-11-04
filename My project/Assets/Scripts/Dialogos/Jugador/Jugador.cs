@@ -20,6 +20,8 @@ public class Jugador : MonoBehaviour
 
     private void Update()
     {
+        if (dialogue.IsOpen) return;
+
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         rb.MovePosition(rb.position + input.normalized * (MoveSpeed * Time.fixedDeltaTime));
