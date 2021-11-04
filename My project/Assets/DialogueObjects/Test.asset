@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue1
   dialogue:
-  - 'Hello!
+  - 'Hello, Maskman!!!!
 
     How are you?'
-  - I'm fine, thank you.
+  - I'm fine, thank you!!!
   responses:
   - responseText: Yes
     dialogueObject: {fileID: 11400000, guid: 42f8919014634544b88b80951bef6d3b, type: 2}
