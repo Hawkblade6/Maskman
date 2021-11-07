@@ -15,8 +15,12 @@ MonoBehaviour:
   dialogue:
   - 'Hello, Maskman!!!!
 
-    How are you?'
-  - I'm fine, thank you!!!
+    How are you today?
+
+    You seem a little bit... Worried.'
+  - 'Hello!! Don''t worry, I''m fine!!!
+
+    However, thanks for asking.'
   responses:
   - responseText: Yes
     dialogueObject: {fileID: 11400000, guid: 42f8919014634544b88b80951bef6d3b, type: 2}

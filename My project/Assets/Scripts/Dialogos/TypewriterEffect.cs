@@ -6,6 +6,8 @@ using TMPro;
 public class TypewriterEffect : MonoBehaviour
 {
     [SerializeField] private float typewriterSpeed = 40;
+    
+    public bool IsRunning { get; private set; }
 
     private readonly Dictionary<HashSet<char>, float> punctuations = new Dictionary<HashSet<char>, float>()
     {
@@ -13,13 +15,22 @@ public class TypewriterEffect : MonoBehaviour
         {new HashSet<char>(){',', ';', ':'}, 0.3f },
     };
 
-    public Coroutine Run(string textToType, TMP_Text textLabel)
+    private Coroutine typingCoroutine;
+    
+    public void Run(string textToType, TMP_Text textLabel)
     {
-        return StartCoroutine(TypeText(textToType, textLabel));
+        typingCoroutine = StartCoroutine(TypeText(textToType, textLabel));
+    }
+
+    public void Stop()
+    {
+        StopCoroutine(typingCoroutine);
+        IsRunning = false;
     }
 
     private IEnumerator TypeText(string textToType, TMP_Text textLabel)
     {
+        IsRunning = true;
         textLabel.text = string.Empty;
         
 
@@ -46,13 +57,10 @@ public class TypewriterEffect : MonoBehaviour
                 {
                     yield return new WaitForSeconds(waitTime);
                 }
-            }
-
-            
+            }           
             yield return null;
         }
-
-        textLabel.text = textToType;
+        IsRunning = false;
     }
 
     private bool IsPunctuation(char character, out float waitTime)
