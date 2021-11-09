@@ -4,6 +4,11 @@ public class ActivadorDialogo : MonoBehaviour, Interaccion
 {
     [SerializeField] private DialogueObject dialogueObject;
 
+    public void UpdateDialogueObject(DialogueObject dialogueObject)
+    {
+        this.dialogueObject = dialogueObject;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && collision.TryGetComponent(out Jugador jugador))
@@ -25,9 +30,13 @@ public class ActivadorDialogo : MonoBehaviour, Interaccion
 
     public void Interact(Jugador jugador) 
     {
-        if (TryGetComponent(out DialogueResponseEvents responseEvents))
+        foreach (DialogueResponseEvents responseEvents in GetComponents<DialogueResponseEvents>())
         {
-            jugador.Dialogue.AddResponseEvents(responseEvents.Events);
+            if (responseEvents.DialogueObject == dialogueObject)
+            {
+                jugador.Dialogue.AddResponseEvents(responseEvents.Events);
+                break;
+            }
         }
         jugador.Dialogue.ShowDialogue(dialogueObject);
     }

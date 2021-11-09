@@ -52,16 +52,26 @@ public class ResponseHandler : MonoBehaviour
 
     private void OnPickedResponse(Response response, int responseIndex)
     {
-        DestroyResponses();
-
-        dialogue.ShowDialogue(response.DialogueObject);
-
         dialogueResponse.SetActive(false);
+
+        DestroyResponses();
 
         if (responseEvents != null && responseIndex <= responseEvents.Length)
         {
             responseEvents[responseIndex].OnPickedResponse?.Invoke();
         }
+
+        responseEvents = null;
+
+        if (response.DialogueObject)
+        {
+            dialogue.ShowDialogue(response.DialogueObject);
+        }
+        else
+        {
+            dialogue.CloseDialogueBox();
+        }
+
     }
     public void DestroyResponses() {
 
