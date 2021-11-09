@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
 
     public Interactable Interactable { get; set; }
 
-    //public Dialogue dia;
-    //public DialogueObject obj;
+    public Dialogue dia;
+    public DialogueObject obj;
 
     public int health;
     public int jumpsLeft;
@@ -448,8 +448,8 @@ private void SceneElemControl()
             if (Input.GetButtonDown("Interact")) 
             {
                 npc = false;
-                //Interactable.Interact(this);
-                //dia.ShowDialogue(obj);
+                Interactable.Interact(this);
+                dia.ShowDialogue(obj);
             }
         }
     }
@@ -472,7 +472,7 @@ private void SceneElemControl()
         if (collision.tag == "NPC")
         {
             npc = false;
-            //dia.CloseDialogueBox();
+            dia.CloseDialogueBox();
         }
     }
 
