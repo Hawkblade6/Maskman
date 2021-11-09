@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
 
     public Interactable Interactable { get; set; }
 
-    public Dialogue dia;
-    public DialogueObject obj;
+    //public Dialogue dia;
+    //public DialogueObject obj;
 
     public int health;
     public int jumpsLeft;
@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed;
     public float dashTime;
     public float dashInterval;
+    public float attackInterval;
+
+    public Vector2 attackForwardRecoil;
 
     private AudioSource[] mySounds;
     private AudioSource stepSound;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private int maxJumps = 1;
     private int gravity = 2;
+    private float _attackEffectLifeTime = 0.1f;
     private bool isGrounded;
     private bool canJump;
     private bool _canClimb;
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private bool dashreset;
     private bool isInputEnabled;
     private bool isFalling;
-    private bool _isAttackable;
+    private bool isAttackable;
     private bool moving;
 
     private bool npc;
@@ -53,7 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         isInputEnabled = true;
         dashreset = true;
-        _isAttackable = true;
+        isAttackable = true;
 
         animator = gameObject.GetComponent<Animator>();
         rigidb = gameObject.GetComponent<Rigidbody2D>();
@@ -79,7 +83,7 @@ public class PlayerController : MonoBehaviour
             FallControl();
             DashControl();
             SceneElemControl();
-            //AttackControl();
+            AttackControl();
         }
     }
 
@@ -107,7 +111,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (_isClimb)
         {
-            // one remaining jump chance after climbing
             jumpsLeft = maxJumps - 1;
         }
     }
@@ -271,6 +274,7 @@ public class PlayerController : MonoBehaviour
     {
         if (canJump)
         {
+            isAttackable = false;
             Vector2 newVelocity;
             newVelocity.x = rigidb.velocity.x;
             newVelocity.y = jumpSpeed;
@@ -295,6 +299,7 @@ public class PlayerController : MonoBehaviour
         if (rigidb.velocity.y < 0)
         {
             isFalling = true;
+            isAttackable = false;
         }
 
         if (Input.GetButtonUp("Jump") && !_isClimb && !isFalling)
@@ -305,6 +310,7 @@ public class PlayerController : MonoBehaviour
         else if(isGrounded)
         {
             isFalling = false;
+            isAttackable = true;
         }
     }
 
@@ -373,7 +379,69 @@ public class PlayerController : MonoBehaviour
     //    }
     //}
 
-    private void SceneElemControl() 
+    private void AttackControl() {
+
+        if (Input.GetButtonDown("Attack") && isAttackable) {
+            Attack();
+
+        }
+    }
+
+    private void Attack() { //mas tipos de ataques ej hacia abajo
+
+        animator.SetTrigger("IsAttack");
+
+        Vector2 detectDirection;
+        detectDirection.x = -transform.localScale.x;
+        detectDirection.y = 0;
+
+        Vector2 recoil;
+        recoil.x = transform.localScale.x > 0 ? -attackForwardRecoil.x : attackForwardRecoil.x;
+        recoil.y = attackForwardRecoil.y;
+
+        StartCoroutine(attackCoroutine( _attackEffectLifeTime, attackInterval, detectDirection, recoil));
+    }
+
+    private IEnumerator attackCoroutine( float effectDelay, float attackInterval, Vector2 detectDirection, Vector2 attackRecoil)
+    {
+        Vector2 origin = transform.position;
+
+        float radius = 0.6f;
+
+        float distance = 1.5f;
+        LayerMask layerMask = LayerMask.GetMask("Enemy") ;
+
+        RaycastHit2D[] hitRecList = Physics2D.CircleCastAll(origin, radius, detectDirection, distance, layerMask);
+
+        foreach (RaycastHit2D hitRec in hitRecList)
+        {
+            GameObject obj = hitRec.collider.gameObject;
+
+            string layerName = LayerMask.LayerToName(obj.layer);
+
+            if (layerName == "Enemy")
+            {
+                //EnemyController enemyController = obj.GetComponent<EnemyController>();
+                //if (enemyController != null)
+                //    enemyController.hurt(1);
+            }
+        }
+
+        if (hitRecList.Length > 0)
+        {
+            rigidb.velocity = attackRecoil;
+        }
+
+        yield return new WaitForSeconds(effectDelay);
+
+        // attack cd
+        isAttackable = false;
+        yield return new WaitForSeconds(attackInterval);
+        isAttackable = true;
+    }
+
+
+private void SceneElemControl() 
     {
         if (npc) 
         {
@@ -381,7 +449,7 @@ public class PlayerController : MonoBehaviour
             {
                 npc = false;
                 //Interactable.Interact(this);
-                dia.ShowDialogue(obj);
+                //dia.ShowDialogue(obj);
             }
         }
     }
@@ -404,7 +472,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "NPC")
         {
             npc = false;
-            dia.CloseDialogueBox();
+            //dia.CloseDialogueBox();
         }
     }
 
