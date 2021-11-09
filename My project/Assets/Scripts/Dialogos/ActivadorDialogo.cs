@@ -25,6 +25,10 @@ public class ActivadorDialogo : MonoBehaviour, Interaccion
 
     public void Interact(Jugador jugador) 
     {
+        if (TryGetComponent(out DialogueResponseEvents responseEvents))
+        {
+            jugador.Dialogue.AddResponseEvents(responseEvents.Events);
+        }
         jugador.Dialogue.ShowDialogue(dialogueObject);
     }
 }

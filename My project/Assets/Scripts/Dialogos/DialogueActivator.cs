@@ -26,6 +26,10 @@ public class DialogueActivator : MonoBehaviour, Interactable
 
     public void Interact(PlayerController player)
     {
+        if (TryGetComponent(out DialogueResponseEvents responseEvents))
+        {
+            player.Dialogue.AddResponseEvents(responseEvents.Events);
+        }
         player.Dialogue.ShowDialogue(dialogueObject);
     }
 }
