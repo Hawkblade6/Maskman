@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,13 +23,18 @@ public class PlayerController : MonoBehaviour
     public float dashTime;
     public float dashInterval;
     public float attackInterval;
+    public float hurtTime;
+    public float hurtRecoverTime;
+    public float deathDelay;
 
     public Vector2 attackForwardRecoil;
+    public Vector2 hurtRecoil;
+    public Vector2 deathRecoil;
+    public Color invulnerableColor;
 
     private AudioSource[] mySounds;
     private AudioSource stepSound;
     private AudioSource windSound;
-
 
     private int maxJumps = 1;
     private int gravity = 2;
@@ -49,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidb;
     private Transform transf;
-    //private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
@@ -440,8 +446,92 @@ public class PlayerController : MonoBehaviour
         isAttackable = true;
     }
 
+    public void hurt(int damage)
+    {
+        gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable");
 
-private void SceneElemControl() 
+        health = Math.Max(health - damage, 0);
+
+        if (health == 0)
+        {
+            die();
+            return;
+        }
+
+        // enter invulnerable state
+        animator.SetTrigger("IsHurt");
+
+        // stop player movement
+        Vector2 newVelocity;
+        newVelocity.x = 0;
+        newVelocity.y = 0;
+        rigidb.velocity = newVelocity;
+
+        // visual effect
+        //spriteRenderer.color = invulnerableColor;
+
+        // death recoil
+        Vector2 newForce;
+        newForce.x = -transform.localScale.x * hurtRecoil.x;
+        newForce.y = hurtRecoil.y;
+        rigidb.AddForce(newForce, ForceMode2D.Impulse);
+
+        isInputEnabled = false;
+
+        StartCoroutine(recoverFromHurtCoroutine());
+    }
+
+    private IEnumerator recoverFromHurtCoroutine()
+    {
+        yield return new WaitForSeconds(hurtTime);
+        isInputEnabled = true;
+        yield return new WaitForSeconds(hurtRecoverTime);
+        spriteRenderer.color = Color.white;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    private void die()
+    {
+        animator.SetTrigger("IsDead");
+
+        isInputEnabled = false;
+
+        // stop player movement
+        Vector2 newVelocity;
+        newVelocity.x = 0;
+        newVelocity.y = 0;
+        rigidb.velocity = newVelocity;
+
+        // visual effect
+        spriteRenderer.color = invulnerableColor;
+
+        // death recoil
+        Vector2 newForce;
+        newForce.x = -transform.localScale.x * deathRecoil.x;
+        newForce.y = deathRecoil.y;
+        rigidb.AddForce(newForce, ForceMode2D.Impulse);
+
+        StartCoroutine(deathCoroutine());
+    }
+
+    private IEnumerator deathCoroutine()
+    {
+        var material = boxCollider.sharedMaterial;
+        material.bounciness = 0.3f;
+        material.friction = 0.3f;
+        // unity bug, need to disable and then enable to make it work
+        boxCollider.enabled = false;
+        boxCollider.enabled = true;
+
+        yield return new WaitForSeconds(deathDelay);
+
+        material.bounciness = 0;
+        material.friction = 0;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+
+    private void SceneElemControl() 
     {
         if (npc) 
         {
@@ -484,7 +574,7 @@ private void SceneElemControl()
 
         if (moving)
         {
-            stepSound.pitch = Random.Range(0.75f,1.2f);
+            stepSound.pitch = UnityEngine.Random.Range(0.75f,1.2f);
             stepSound.Play();
         }
         else {
