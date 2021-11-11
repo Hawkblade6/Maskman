@@ -14,20 +14,20 @@ public class PatrolController : EnemyController
     private bool _isChasing;
     private bool _isMovable;
 
-    public Transform _playerTransform;
-    private Transform _transform;
-    private Rigidbody2D _rigidbody;
-    private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
+    public Transform playerTransform;
+    private Transform transform;
+    private Rigidbody2D rigidbody;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         //_playerTransform = GlobalController.Instance.player.GetComponent<Transform>();
-        _transform = gameObject.GetComponent<Transform>();
-        _rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _animator = gameObject.GetComponent<Animator>();
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        transform = gameObject.GetComponent<Transform>();
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         _currentState = new Patrol();
 
@@ -39,13 +39,13 @@ public class PatrolController : EnemyController
     void Update()
     {
         // update distance between player and enemy
-        _playerEnemyDistance = _playerTransform.position.x - _transform.position.x;
+        _playerEnemyDistance = playerTransform.position.x - transform.position.x;
 
         // update edge detection
         Vector2 detectOffset;
-        detectOffset.x = edgeSafeDistance * _transform.localScale.x;
+        detectOffset.x = edgeSafeDistance * transform.localScale.x;
         detectOffset.y = 0;
-        _reachEdge = checkGrounded(detectOffset) ? 0 : (_transform.localScale.x > 0 ? 1 : -1);
+        _reachEdge = CheckGrounded(detectOffset) ? 0 : (transform.localScale.x > 0 ? 1 : -1);
 
         // update state
         if (!_currentState.checkValid(this))
@@ -82,12 +82,12 @@ public class PatrolController : EnemyController
         return UnityEngine.Random.Range(behaveIntervalLeast, behaveIntervalMost);
     }
 
-    public int reachEdge()
+    public int ReachEdge()
     {
         return _reachEdge;
     }
 
-    public override void hurt(int damage)
+    public override void Hurt(int damage)
     {
         health = Math.Max(health - damage, 0);
 
@@ -95,27 +95,27 @@ public class PatrolController : EnemyController
 
         if (health == 0)
         {
-            die();
+            Die();
             return;
         }
 
         Vector2 newVelocity = hurtRecoil;
-        newVelocity.x *= _transform.localScale.x;
+        newVelocity.x *= transform.localScale.x;
 
-        _rigidbody.velocity = newVelocity;
+        rigidbody.velocity = newVelocity;
 
-        StartCoroutine(hurtCoroutine());
+        StartCoroutine(HurtCoroutine());
     }
 
-    private IEnumerator hurtCoroutine()
+    private IEnumerator HurtCoroutine()
     {
         yield return new WaitForSeconds(hurtRecoilTime);
         _isMovable = true;
     }
 
-    private bool checkGrounded(Vector2 offset)
+    private bool CheckGrounded(Vector2 offset)
     {
-        Vector2 origin = _transform.position;
+        Vector2 origin = transform.position;
         origin += offset;
 
         float radius = 0.3f;
@@ -132,7 +132,7 @@ public class PatrolController : EnemyController
         return hitRec.collider != null;
     }
 
-    public void walk(float move)
+    public void Walk(float move)
     {
         int direction = move > 0 ? 1 : move < 0 ? -1 : 0;
 
@@ -141,35 +141,35 @@ public class PatrolController : EnemyController
         // flip sprite
         if (direction != 0 && health > 0)
         {
-            Vector3 newScale = _transform.localScale;
+            Vector3 newScale = transform.localScale;
             newScale.x = direction;
-            _transform.localScale = newScale;
+            transform.localScale = newScale;
         }
 
         // set velocity
-        Vector2 newVelocity = _rigidbody.velocity;
+        Vector2 newVelocity = rigidbody.velocity;
         newVelocity.x = newWalkSpeed;
-        _rigidbody.velocity = newVelocity;
+        rigidbody.velocity = newVelocity;
 
         // animation
-        _animator.SetFloat("Speed", Math.Abs(newWalkSpeed));
+        animator.SetFloat("Speed", Math.Abs(newWalkSpeed));
     }
 
-    protected override void die()
+    protected override void Die()
     {
-        _animator.SetTrigger("isDead");
+        animator.SetTrigger("isDead");
 
         Vector2 newVelocity;
         newVelocity.x = 0;
         newVelocity.y = 0;
-        _rigidbody.velocity = newVelocity;
+        rigidbody.velocity = newVelocity;
 
         gameObject.layer = LayerMask.NameToLayer("Decoration");
 
         Vector2 newForce;
-        newForce.x = _transform.localScale.x * deathForce.x;
+        newForce.x = transform.localScale.x * deathForce.x;
         newForce.y = deathForce.y;
-        _rigidbody.AddForce(newForce, ForceMode2D.Impulse);
+        rigidbody.AddForce(newForce, ForceMode2D.Impulse);
 
         StartCoroutine(fadeCoroutine());
     }
@@ -181,11 +181,11 @@ public class PatrolController : EnemyController
         {
             destroyDelay -= Time.deltaTime;
 
-            if (_spriteRenderer.color.a > 0)
+            if (spriteRenderer.color.a > 0)
             {
-                Color newColor = _spriteRenderer.color;
+                Color newColor = spriteRenderer.color;
                 newColor.a -= Time.deltaTime / destroyDelay;
-                _spriteRenderer.color = newColor;
+                spriteRenderer.color = newColor;
                 yield return null;
             }
         }
@@ -272,7 +272,7 @@ public class PatrolController : EnemyController
         {
             PatrolController patrolController = (PatrolController)enemyController;
             float dist = patrolController.playerEnemyDistance();
-            patrolController.walk(Math.Abs(dist) < 0.1f ? 0 : dist);
+            patrolController.Walk(Math.Abs(dist) < 0.1f ? 0 : dist);
         }
     }
 
@@ -280,24 +280,24 @@ public class PatrolController : EnemyController
     {
         public override bool checkValid(PatrolController patrolController)
         {
-            return patrolController.reachEdge() == 0;
+            return patrolController.ReachEdge() == 0;
         }
 
         public override void Execute(PatrolController patrolController)
         {
-            patrolController.walk(0);
+            patrolController.Walk(0);
         }
     }
     public class WalkingLeft : PatrolState
     {
         public override bool checkValid(PatrolController patrolController)
         {
-            return patrolController.reachEdge() != -1;
+            return patrolController.ReachEdge() != -1;
         }
 
         public override void Execute(PatrolController patrolController)
         {
-            patrolController.walk(-1);
+            patrolController.Walk(-1);
         }
     }
 
@@ -305,12 +305,12 @@ public class PatrolController : EnemyController
     {
         public override bool checkValid(PatrolController patrolController)
         {
-            return patrolController.reachEdge() != 1;
+            return patrolController.ReachEdge() != 1;
         }
 
         public override void Execute(PatrolController patrolController)
         {
-            patrolController.walk(1);
+            patrolController.Walk(1);
         }
     }
 }

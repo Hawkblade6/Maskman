@@ -20,7 +20,7 @@ public abstract class EnemyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string layerName = LayerMask.LayerToName(collision.collider.gameObject.layer);
-
+        Debug.Log(layerName);
         if (layerName == "Player")
         {
             PlayerController playerController = collision.collider.GetComponent<PlayerController>();
@@ -36,9 +36,9 @@ public abstract class EnemyController : MonoBehaviour
 
     public abstract float behaveInterval();
 
-    public abstract void hurt(int damage);
+    public abstract void Hurt(int damage);
 
-    protected abstract void die();
+    protected abstract void Die();
 
     public abstract class State
     {

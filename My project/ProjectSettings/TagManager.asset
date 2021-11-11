@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - PowerUp
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Plataforma
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 
@@ -45,4 +46,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1234538925
+    locked: 0
+  - name: Enemy
+    uniqueID: 1403180795
     locked: 0

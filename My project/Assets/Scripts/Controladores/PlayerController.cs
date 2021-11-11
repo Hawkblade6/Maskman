@@ -459,7 +459,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // enter invulnerable state
-        animator.SetTrigger("IsHurt");
+        //animator.SetTrigger("IsHurt");
 
         // stop player movement
         Vector2 newVelocity;
@@ -468,7 +468,7 @@ public class PlayerController : MonoBehaviour
         rigidb.velocity = newVelocity;
 
         // visual effect
-        //spriteRenderer.color = invulnerableColor;
+        spriteRenderer.color = invulnerableColor;
 
         // death recoil
         Vector2 newForce;
