@@ -278,9 +278,10 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        isAttackable = false;
         if (canJump)
         {
-            isAttackable = false;
+            
             Vector2 newVelocity;
             newVelocity.x = rigidb.velocity.x;
             newVelocity.y = jumpSpeed;
@@ -387,7 +388,8 @@ public class PlayerController : MonoBehaviour
 
     private void AttackControl() {
 
-        if (Input.GetButtonDown("Attack") && isAttackable) {
+        if (Input.GetButtonDown("Attack") && isAttackable && isGrounded) {
+            canJump = false;
             Attack();
 
         }
@@ -395,7 +397,8 @@ public class PlayerController : MonoBehaviour
 
     private void Attack() { //mas tipos de ataques ej hacia abajo
 
-        animator.SetTrigger("IsAttack");
+        
+        animator.SetBool("IsAttack",true);
 
         Vector2 detectDirection;
         detectDirection.x = -transform.localScale.x;
@@ -444,6 +447,8 @@ public class PlayerController : MonoBehaviour
         isAttackable = false;
         yield return new WaitForSeconds(attackInterval);
         isAttackable = true;
+        canJump = true;
+        animator.SetBool("IsAttack", false);
     }
 
     public void hurt(int damage)
