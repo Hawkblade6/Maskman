@@ -19,8 +19,8 @@ public class MaskmanUIControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        //currentHealth = maxHealth;
+        //healthBar.SetMaxHealth(maxHealth);
         //currentStamina = maxStamina;
         //staminaBar.SetMaxStamina(maxStamina);
         
@@ -31,11 +31,11 @@ public class MaskmanUIControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            TakeDamage(50);
+            //TakeDamage(50);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Cure(healingPower);
+           // Cure(healingPower);
         }
         if (Input.GetMouseButtonDown(0)) 
         {

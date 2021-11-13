@@ -13,18 +13,17 @@ public class HealthBar : MonoBehaviour
 
     private bool damageAnimation = false;
 
-    public void SetMaxHealth(int health) //Establece la vida maxima
+    public void SetMaxHealth(float health) //Establece la vida maxima
     {
         slider.maxValue = health;
-        slider.value = health;
+        //slider.value = health;
         fadeawaySlider.maxValue = health;
         fadeawaySlider.value = health;
         texto.text = slider.value + " / " + slider.maxValue;
     }
 
-    public void SetHealth(int health) //Establece la vida actual
+    public void SetHealth(float health) //Establece la vida actual
     {
-
         if (health < slider.value)
         {
             slider.value = health;
@@ -52,7 +51,7 @@ public class HealthBar : MonoBehaviour
         return slider.value;
     } 
 
-    IEnumerator FadeawayHealthBar(int health) //Se asegura de que la barra de vida de fondo baje poco a poco
+    IEnumerator FadeawayHealthBar(float health) //Se asegura de que la barra de vida de fondo baje poco a poco
     {
         yield return new WaitForSeconds(0.4f);
         while (fadeawaySlider.value > slider.value)

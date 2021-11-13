@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour
     //public Dialogue dia;
     //public DialogueObject obj;
 
-    public int health;
+    
     public int jumpsLeft;
+    public float maxHealth;
+    public float weaponDamage;
+    public float damageRadius;
+    public float damageDistance;
     public float moveSpeed;
     public float jumpSpeed;
     //public float fallSpeed;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 hurtRecoil;
     public Vector2 deathRecoil;
     public Color invulnerableColor;
+    public HealthBar healthBar;
 
     private AudioSource[] mySounds;
     private AudioSource stepSound;
@@ -39,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private int maxJumps = 1;
     private int gravity = 2;
     private float _attackEffectLifeTime = 0.1f;
+    private float currentHealth;
     private bool isGrounded;
     private bool canJump;
     private bool _canClimb;
@@ -64,11 +70,13 @@ public class PlayerController : MonoBehaviour
         isInputEnabled = true;
         dashreset = true;
         isAttackable = true;
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
 
         animator = gameObject.GetComponent<Animator>();
         rigidb = gameObject.GetComponent<Rigidbody2D>();
         transf = gameObject.GetComponent<Transform>();
-        //_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
 
         mySounds = GetComponents<AudioSource>();
@@ -95,6 +103,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePlayerState()
     {
+        healthBar.SetHealth(currentHealth);
         isGrounded = IsGrounded();
         canJump = isGrounded;
 
@@ -401,7 +410,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsAttack",true);
 
         Vector2 detectDirection;
-        detectDirection.x = -transform.localScale.x;
+        detectDirection.x = transform.localScale.x;
         detectDirection.y = 0;
 
         Vector2 recoil;
@@ -414,22 +423,30 @@ public class PlayerController : MonoBehaviour
     private IEnumerator attackCoroutine( float effectDelay, float attackInterval, Vector2 detectDirection, Vector2 attackRecoil)
     {
         Vector2 origin = transform.position;
-
-        float radius = 0.6f;
-
-        float distance = 1.5f;
         LayerMask layerMask = LayerMask.GetMask("Enemy") ;
 
-        RaycastHit2D[] hitRecList = Physics2D.CircleCastAll(origin, radius, detectDirection, distance, layerMask);
+
+        RaycastHit2D ray = Physics2D.Raycast(origin, detectDirection, damageDistance);
+        
+        if(ray.collider != null)
+        if (ray.collider.tag.Equals("Enemy"))
+        {
+            ray.collider.GetComponent<BarraDeVida>().modificacionVida(-weaponDamage);
+        }
+        /*
+        RaycastHit2D[] hitRecList = Physics2D.CircleCastAll(origin, damageRadius, detectDirection, damageDistance, layerMask);
+        
 
         foreach (RaycastHit2D hitRec in hitRecList)
         {
+            Debug.Log("I hit " + hitRec.collider.gameObject.name);
             GameObject obj = hitRec.collider.gameObject;
 
             string layerName = LayerMask.LayerToName(obj.layer);
 
             if (layerName == "Enemy")
             {
+                obj.GetComponent<BarraDeVida>().modificacionVida(-weaponDamage);
                 //EnemyController enemyController = obj.GetComponent<EnemyController>();
                 //if (enemyController != null)
                 //    enemyController.hurt(1);
@@ -440,7 +457,7 @@ public class PlayerController : MonoBehaviour
         {
             rigidb.velocity = attackRecoil;
         }
-
+        */
         yield return new WaitForSeconds(effectDelay);
 
         // attack cd
@@ -451,13 +468,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsAttack", false);
     }
 
-    public void hurt(int damage)
+    public void hurt(float damage)
     {
-        gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable");
+        //gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable");
 
-        health = Math.Max(health - damage, 0);
+        currentHealth = Math.Max(currentHealth - damage, 0);
+        healthBar.SetHealth(currentHealth);
 
-        if (health == 0)
+        if (currentHealth <= 0)
         {
             die();
             return;
