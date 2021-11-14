@@ -5,18 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void BotonNuevaPartida()
+    public void NuevaPartida()
     {
         //meter qué escena se debe abrir
         SceneManager.LoadScene("SceneEstibali");
     }
 
-    public void BotonCargarPartida() 
+    public void CargarPartida() 
     {
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene("CargarPartida");
     }
 
-    public void BotonSalir()
+    public void Salir()
     {
         Debug.Log("Salimos de la aplicacion");
         Application.Quit();
