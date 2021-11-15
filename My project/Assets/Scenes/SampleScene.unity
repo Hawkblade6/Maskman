@@ -433,6 +433,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 51002369997663141, guid: 697932208450a3f4582827a50531db78, type: 3}
+      propertyPath: SonidoGolpeado
+      value: 
+      objectReference: {fileID: 8300000, guid: 50db747670cf509478a90fd005c114da, type: 3}
+    - target: {fileID: 51002369997663141, guid: 697932208450a3f4582827a50531db78, type: 3}
       propertyPath: objetivoAtacado
       value: 
       objectReference: {fileID: 1693890156}
@@ -454,11 +458,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 51002369997663149, guid: 697932208450a3f4582827a50531db78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1163.127
+      value: -1166.677
       objectReference: {fileID: 0}
     - target: {fileID: 51002369997663149, guid: 697932208450a3f4582827a50531db78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -22.757265
+      value: -26.227
       objectReference: {fileID: 0}
     - target: {fileID: 51002369997663149, guid: 697932208450a3f4582827a50531db78, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3278,12 +3282,32 @@ PrefabInstance:
       value: 210
       objectReference: {fileID: 0}
     - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
+      propertyPath: hurtRecoil.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
+      propertyPath: hurtRecoil.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
       propertyPath: weaponDamage
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
+      propertyPath: deathRecoil.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
+      propertyPath: deathRecoil.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
       propertyPath: attackInterval
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
+      propertyPath: damageDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3662226799968921712, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
       propertyPath: hurtRecoverTime

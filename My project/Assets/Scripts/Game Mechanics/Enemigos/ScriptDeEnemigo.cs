@@ -151,10 +151,10 @@ public class ScriptDeEnemigo : MonoBehaviour
 
 	}
 
-	void golpeado ()
+	public void golpeado ()
 	{
 		GetComponent<AudioSource> ().PlayOneShot (SonidoGolpeado, 1.0F);
-
+		
 	}
 
 
