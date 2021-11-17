@@ -432,7 +432,7 @@ public class PlayerController : MonoBehaviour
         if (ray.collider.tag.Equals("Enemy"))
         {
             ray.collider.GetComponent<BarraDeVida>().modificacionVida(-weaponDamage);
-            //ray.collider.GetComponent<ScriptDeEnemigo>().golpeado();
+            ray.collider.GetComponent<ScriptDeEnemigo>().golpeado();
         }
         /*
         RaycastHit2D[] hitRecList = Physics2D.CircleCastAll(origin, damageRadius, detectDirection, damageDistance, layerMask);
