@@ -521,7 +521,8 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("IsDead");
 
         isInputEnabled = false;
-
+        gameObject.GetComponent<ParticleSystem>().Play();
+        gameObject.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
         // stop player movement
         Vector2 newVelocity;
         newVelocity.x = 0;
@@ -542,17 +543,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator deathCoroutine()
     {
-        var material = boxCollider.sharedMaterial;
-        material.bounciness = 0.3f;
-        material.friction = 0.3f;
-        // unity bug, need to disable and then enable to make it work
-        boxCollider.enabled = false;
-        boxCollider.enabled = true;
-
+        
         yield return new WaitForSeconds(deathDelay);
-
-        material.bounciness = 0;
-        material.friction = 0;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ACTIVAR GUARDADO?
     }
 
