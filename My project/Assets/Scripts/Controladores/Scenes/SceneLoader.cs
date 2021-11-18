@@ -7,7 +7,6 @@ public class SceneLoader : MonoBehaviour
 {
 
     public string nameScene;
-    public int numSalida;
     public int numEntrada;
     public GameObject player;
 
