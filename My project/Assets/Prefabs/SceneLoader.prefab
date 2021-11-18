@@ -123,3 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameScene: 
+  numEntrada: 0
+  player: {fileID: 3662226799968921713, guid: ccc0e33c5c07b6f4aa4c4380567d3feb, type: 3}
