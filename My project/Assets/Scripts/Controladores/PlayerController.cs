@@ -41,9 +41,9 @@ public class PlayerController : MonoBehaviour
     private AudioSource stepSound;
     private AudioSource windSound;
 
-    private int maxJumps = 1;
+    private int maxJumps = 2;
     private int gravity = 2;
-    private float _attackEffectLifeTime = 0.1f;
+    private float attackEffectLifeTime = 0.1f;
     private float currentHealth;
     private bool isGrounded;
     private bool canJump;
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     private bool isFalling;
     private bool isAttackable;
     private bool moving;
+    private bool jumping;
 
     private bool npc;
 
@@ -82,8 +83,10 @@ public class PlayerController : MonoBehaviour
         mySounds = GetComponents<AudioSource>();
 
         stepSound = mySounds[0];
-        windSound = mySounds[1]
-;    }
+        windSound = mySounds[1];
+        maxJumps = PlayerPrefs.GetInt("maxJumps");
+        jumpsLeft = maxJumps;
+    }
 
     // Update is called once per frame
     void Update()
@@ -106,6 +109,7 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         isGrounded = IsGrounded();
         canJump = isGrounded;
+        jumping = !canJump;
 
         animator.SetBool("IsGround", isGrounded);
 
@@ -115,19 +119,16 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && verticalVelocity == 0)
         {
             animator.SetBool("IsJump", false);
-            //_animator.ResetTrigger("IsJumpFirst");
-            //_animator.ResetTrigger("IsJumpSecond");
             animator.SetBool("IsDown", false);
 
             jumpsLeft = maxJumps;
             _isClimb = false;
-            canDash = true;
-            
+            canDash = true;    
         }
-        else if (_isClimb)
-        {
-            jumpsLeft = maxJumps - 1;
-        }
+        //else if (jumping)
+        //{
+        //    jumpsLeft -= 1;
+        //}
     }
 
     private void Move()
@@ -215,38 +216,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //void OnDrawGizmosSelected()       
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawSphere(transform.position, 0.7f);
-
-    //}
-
-    //private bool CheckWallCollision() 
-    //{
-    //    Vector2 origin = transform.position;
-
-
-
-    //    // detect sides
-    //    Vector2 directionLeft;
-    //    directionLeft.x = -1;
-    //    directionLeft.y = 0;
-
-    //    Vector2 directionRight;
-    //    directionRight.x = 1;
-    //    directionRight.y = 0;
-
-    //    float distance = 0.6f;
-    //    LayerMask layerMask = LayerMask.GetMask("Plataforma");
-
-    //    RaycastHit2D hitRecL = Physics2D.Raycast(origin, directionLeft, distance);
-    //    RaycastHit2D hitRecR = Physics2D.Raycast(origin, directionRight, distance);
-
-        
-    //    return (hitRecL.collider != null || hitRecR.collider != null);
-
-    //}
 
     private bool IsGrounded()
     {
@@ -273,14 +242,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
-        if (_isClimb)
+        if (jumpsLeft > 0)
         {
-            //ClimbJump();
-        }
-        else if (jumpsLeft > 0)
-        {
-            
+            Debug.Log(jumpsLeft);
             Jump();
         }
     }
@@ -288,8 +252,9 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         isAttackable = false;
-        if (canJump)
+        if (canJump || jumping)
         {
+            jumping = true;
             
             Vector2 newVelocity;
             newVelocity.x = rigidb.velocity.x;
@@ -299,6 +264,7 @@ public class PlayerController : MonoBehaviour
 
             animator.SetBool("IsJump", true);
             jumpsLeft -= 1;
+
             if (jumpsLeft == 0)
             {
                 //_animator.SetTrigger("IsJumpSecond");
@@ -417,7 +383,7 @@ public class PlayerController : MonoBehaviour
         recoil.x = transform.localScale.x > 0 ? -attackForwardRecoil.x : attackForwardRecoil.x;
         recoil.y = attackForwardRecoil.y;
 
-        StartCoroutine(attackCoroutine( _attackEffectLifeTime, attackInterval, detectDirection, recoil));
+        StartCoroutine(attackCoroutine( attackEffectLifeTime, attackInterval, detectDirection, recoil));
     }
 
     private IEnumerator attackCoroutine( float effectDelay, float attackInterval, Vector2 detectDirection, Vector2 attackRecoil)
