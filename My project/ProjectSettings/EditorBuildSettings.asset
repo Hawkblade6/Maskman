@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
+    path: Assets/Scenes/SceneEstibali.unity
+    guid: d786b0c8771493142a5078d1c6de87dd
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -15,15 +18,21 @@ EditorBuildSettings:
     path: Assets/Scenes/CargarPartida.unity
     guid: 8474c8b2a83240346a8e61730f0a946b
   - enabled: 1
-    path: Assets/Scenes/Cueva1.unity
+    path: Assets/Scenes/Cueva/Cueva1.unity
     guid: d2c595036037ccb43a45fbd869d89eb7
   - enabled: 1
-    path: Assets/Scenes/Cueva2.unity
+    path: Assets/Scenes/Cueva/Cueva2.unity
     guid: a2e57fb6675036a4a92df7747336a4c0
   - enabled: 1
-    path: Assets/Scenes/Cueva3.unity
+    path: Assets/Scenes/Cueva/Cueva3.unity
     guid: 213605adfe9e9f44187faaa3566f4adb
   - enabled: 1
-    path: Assets/Scenes/SceneEstibali.unity
-    guid: d786b0c8771493142a5078d1c6de87dd
+    path: Assets/Scenes/Cueva/Cueva4.unity
+    guid: 475c8ffa5d056b344996ec5b8caeb2ee
+  - enabled: 1
+    path: Assets/Scenes/Cueva/Cueva5.unity
+    guid: c7cd58b9172b9144688e88a13ae86aff
+  - enabled: 1
+    path: Assets/Scenes/Cueva/CuevaBoss.unity
+    guid: 0e5a84f33e7cb5940a2cd4a8b04ecd3b
   m_configObjects: {}
