@@ -15,6 +15,10 @@ public class MenuManager : MonoBehaviour
 
     public void CargarPartida() 
     {
+        if (!PlayerPrefs.HasKey("habitacion")){
+                PlayerPrefs.SetString("habitacion", "Cueva1");
+        }
+
         SceneManager.LoadScene(PlayerPrefs.GetString("habitacion"));
     }
 

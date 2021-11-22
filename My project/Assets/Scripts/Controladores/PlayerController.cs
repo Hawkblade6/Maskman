@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
         isInputEnabled = true;
         dashreset = true;
         isAttackable = true;
-        healthBar.SetMaxHealth(maxHealth);
-        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(PlayerPrefs.GetInt("maxhp"));
+        currentHealth = PlayerPrefs.GetInt("currenthp");
 
         animator = gameObject.GetComponent<Animator>();
         rigidb = gameObject.GetComponent<Rigidbody2D>();
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         stepSound = mySounds[0];
         windSound = mySounds[1];
         maxJumps = PlayerPrefs.GetInt("maxJumps");
-        jumpsLeft = maxJumps;
+        weaponDamage = PlayerPrefs.GetInt("damage");
     }
 
     // Update is called once per frame
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePlayerState()
     {
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(PlayerPrefs.GetInt("currenthp"));
         isGrounded = IsGrounded();
         canJump = isGrounded;
         jumping = !canJump;
@@ -125,10 +125,6 @@ public class PlayerController : MonoBehaviour
             _isClimb = false;
             canDash = true;    
         }
-        //else if (jumping)
-        //{
-        //    jumpsLeft -= 1;
-        //}
     }
 
     private void Move()
@@ -136,8 +132,6 @@ public class PlayerController : MonoBehaviour
         // calculate movement
         float horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed;
 
-        // set velocity
-        //Rigidbody2D.velocity = new Vector2(horizontal * speed, Rigidbody2D.velocity.y);
         Vector2 newVelocity;
         newVelocity.x = horizontalMovement;
         newVelocity.y = rigidb.velocity.y;
@@ -157,22 +151,6 @@ public class PlayerController : MonoBehaviour
             newVelocity.x = 0;
             rigidb.velocity = newVelocity;
         }
-
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    SaveSystem.SavePlayer(this);
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    PlayerData data = SaveSystem.LoadPlayer();
-        //    Vector2 pos;
-        //    pos.x = data.position[0];
-        //    pos.y = data.position[1];
-        //    transform.position = pos;
-        //}
-
-
-
 
         if (!_isClimb)
         {

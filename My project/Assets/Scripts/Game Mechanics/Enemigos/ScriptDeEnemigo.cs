@@ -10,6 +10,7 @@ public class ScriptDeEnemigo : MonoBehaviour
 	public GameObject objetivoAtacado;
 	public GameObject visionIzquierda;
 	public GameObject visionDerecha;
+	public Rigidbody2D rigidb;
 	//------- MOVIMIENTO
 	public float distanciaMirar = 20.0F;
 	public float distanciaAtacar = 5.0F;
@@ -53,6 +54,7 @@ public class ScriptDeEnemigo : MonoBehaviour
 		gameObject.GetComponent<BarraDeVida> ().totalVida = vida;
 		gameObject.GetComponent<BarraDeVida> ().vidaActual = vida;
 		bdv = gameObject.GetComponent<BarraDeVida> ();
+		rigidb = gameObject.GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -154,7 +156,24 @@ public class ScriptDeEnemigo : MonoBehaviour
 	public void golpeado ()
 	{
 		GetComponent<AudioSource> ().PlayOneShot (SonidoGolpeado, 1.0F);
-		
+
+		Vector2 newVelocity;
+		newVelocity.x = 0;
+
+		if (gameObject.GetComponent<Animator>().GetBool("Left"))
+		{
+			newVelocity.x = 3;
+		}
+		else if (!gameObject.GetComponent<Animator>().GetBool("Left")) {
+			newVelocity.x = -3;
+		}
+
+
+		newVelocity.y = rigidb.velocity.y;
+
+		rigidb.velocity = newVelocity;
+
+		GetComponent<Rigidbody2D>().velocity = newVelocity;
 	}
 
 
