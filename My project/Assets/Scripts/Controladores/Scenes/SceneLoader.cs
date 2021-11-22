@@ -18,8 +18,14 @@ public class SceneLoader : MonoBehaviour
     }
 
     public void LoadScene() {
-
+        if (nameScene == "") { 
+            nameScene = PlayerPrefs.GetString("habitacion");
+        }
         SceneManager.LoadScene(nameScene);
-        Debug.Log(SceneManager.GetActiveScene().name);
+    }
+
+    public void DeathScene() {
+
+        SceneManager.LoadScene("DeadScene");
     }
 }

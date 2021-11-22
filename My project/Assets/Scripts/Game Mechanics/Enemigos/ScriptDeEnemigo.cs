@@ -17,7 +17,7 @@ public class ScriptDeEnemigo : MonoBehaviour
 	public float velocidad = 2.0F;
 	public float suavidad = 6.0F;
 	//----- ESTADÍSTICAS
-	public float dano = -10F;
+	public float dano = 10F;
 	public float danoPneuma = +5F;
 	//Daño que produce el enemigo
 	public float cooldown = 3.0F;
@@ -130,7 +130,7 @@ public class ScriptDeEnemigo : MonoBehaviour
                 if (Time.time > DPS) {
                     gameObject.GetComponent<Animator>().SetBool("Attack", true);
                     DPS = Time.time + cooldown;
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().hurt(-dano);
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().hurt(dano);
                     if (golpeBool) {
                         golpeBool = false;
                         StartCoroutine("TimelineDano");

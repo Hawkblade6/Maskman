@@ -222,7 +222,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.37484407, g: 0.9528302, b: 0.05842829, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4985,6 +4985,7 @@ MonoBehaviour:
   deathRecoil: {x: 0, y: 0}
   invulnerableColor: {r: 0, g: 0, b: 0, a: 0}
   healthBar: {fileID: 2122894948676029102}
+  sc: {fileID: 6676533513500766619, guid: 5e072b35d4ce45b4a978468818a74593, type: 3}
 --- !u!95 &3662226799968921727
 Animator:
   serializedVersion: 3

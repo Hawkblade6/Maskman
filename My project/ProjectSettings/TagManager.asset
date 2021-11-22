@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - NPC
-  - PowerUp
   - Enemy
+  - HealthUp
+  - DamageUp
   layers:
   - Default
   - TransparentFX

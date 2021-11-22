@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,8 +12,6 @@ public class PlayerController : MonoBehaviour
 
     public Interactable Interactable { get; set; }
 
-    //public Dialogue dia;
-    //public DialogueObject obj;
 
     
     public int jumpsLeft;
@@ -22,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public float damageDistance;
     public float moveSpeed;
     public float jumpSpeed;
-    //public float fallSpeed;
     public float dashSpeed;
     public float dashTime;
     public float dashInterval;
@@ -36,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 deathRecoil;
     public Color invulnerableColor;
     public HealthBar healthBar;
+    public SceneLoader sc;
 
     private AudioSource[] mySounds;
     private AudioSource stepSound;
@@ -380,31 +379,7 @@ public class PlayerController : MonoBehaviour
                 ray.collider.GetComponent<ScriptDeEnemigo>().golpeado();
             }
         }
-        /*
-        RaycastHit2D[] hitRecList = Physics2D.CircleCastAll(origin, damageRadius, detectDirection, damageDistance, layerMask);
-        
 
-        foreach (RaycastHit2D hitRec in hitRecList)
-        {
-            Debug.Log("I hit " + hitRec.collider.gameObject.name);
-            GameObject obj = hitRec.collider.gameObject;
-
-            string layerName = LayerMask.LayerToName(obj.layer);
-
-            if (layerName == "Enemy")
-            {
-                obj.GetComponent<BarraDeVida>().modificacionVida(-weaponDamage);
-                //EnemyController enemyController = obj.GetComponent<EnemyController>();
-                //if (enemyController != null)
-                //    enemyController.hurt(1);
-            }
-        }
-
-        if (hitRecList.Length > 0)
-        {
-            rigidb.velocity = attackRecoil;
-        }
-        */
         yield return new WaitForSeconds(effectDelay);
 
         // attack cd
@@ -417,38 +392,37 @@ public class PlayerController : MonoBehaviour
 
     public void hurt(float damage)
     {
-        //gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable");
-
-        currentHealth = Math.Max(currentHealth - damage, 0);
+        currentHealth -= damage;
+        PlayerPrefs.SetInt("currenthp",(int)currentHealth);
         healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0)
         {
             die();
-            return;
+
         }
+        else
+        {
 
-        // enter invulnerable state
-        //animator.SetTrigger("IsHurt");
+            // stop player movement
+            Vector2 newVelocity;
+            newVelocity.x = 0;
+            newVelocity.y = 0;
+            rigidb.velocity = newVelocity;
 
-        // stop player movement
-        Vector2 newVelocity;
-        newVelocity.x = 0;
-        newVelocity.y = 0;
-        rigidb.velocity = newVelocity;
+            // visual effect
+            spriteRenderer.color = invulnerableColor;
 
-        // visual effect
-        spriteRenderer.color = invulnerableColor;
+            // death recoil
+            Vector2 newForce;
+            newForce.x = -transform.localScale.x * hurtRecoil.x;
+            newForce.y = hurtRecoil.y;
+            rigidb.AddForce(newForce, ForceMode2D.Impulse);
 
-        // death recoil
-        Vector2 newForce;
-        newForce.x = -transform.localScale.x * hurtRecoil.x;
-        newForce.y = hurtRecoil.y;
-        rigidb.AddForce(newForce, ForceMode2D.Impulse);
+            isInputEnabled = false;
 
-        isInputEnabled = false;
-
-        StartCoroutine(recoverFromHurtCoroutine());
+            StartCoroutine(recoverFromHurtCoroutine());
+        }
     }
 
     private IEnumerator recoverFromHurtCoroutine()
@@ -477,10 +451,10 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = invulnerableColor;
 
         // death recoil
-        Vector2 newForce;
-        newForce.x = -transform.localScale.x * deathRecoil.x;
-        newForce.y = deathRecoil.y;
-        rigidb.AddForce(newForce, ForceMode2D.Impulse);
+        Vector2 newVelocity2;
+        newVelocity2.x = 0;
+        newVelocity2.y = 0;
+        rigidb.velocity = newVelocity2;
 
         StartCoroutine(deathCoroutine());
     }
@@ -489,7 +463,8 @@ public class PlayerController : MonoBehaviour
     {
         
         yield return new WaitForSeconds(deathDelay);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ACTIVAR GUARDADO?
+        Destroy(this);
+        sc.DeathScene();
     }
 
 
@@ -512,10 +487,23 @@ public class PlayerController : MonoBehaviour
         {
             npc = true;
         }
-        if (collision.tag == "PowerUp")
+        if (collision.tag == "HealthUp")
         {
-            // Aplicar Efectos
             Destroy(collision.gameObject);
+            int maxh = PlayerPrefs.GetInt("maxhp");
+            maxh += 50;
+            PlayerPrefs.SetInt("maxhp", maxh);
+            healthBar.SetMaxHealth(PlayerPrefs.GetInt("maxhp"));
+            PlayerPrefs.SetInt("currenthp", maxh);
+            currentHealth = maxh;
+        }
+        if (collision.tag == "DamageUp")
+        {
+            Destroy(collision.gameObject);
+            int dmg = PlayerPrefs.GetInt("damage");
+            dmg += 15;
+            PlayerPrefs.SetInt("damage", dmg);
+            weaponDamage = dmg;
         }
     }
 
