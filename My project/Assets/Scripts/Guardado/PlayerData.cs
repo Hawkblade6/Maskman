@@ -6,13 +6,23 @@ using UnityEngine;
 public class PlayerData
 {
 
-    public float[] position;
+    public string habitacion;
+    public int entrada;
+    public int maxJumps;
+    public int canDash;
+    public int maxhp;
+    public int currenthp;
+    public int damage;
 
     public PlayerData(PlayerController player) 
     {
 
-        position = new float[2];
-        position[0] = player.transform.position.x;
-        position[1] = player.transform.position.y;
+        habitacion = PlayerPrefs.GetString("habitacion");
+        entrada = PlayerPrefs.GetInt("entrada");
+        maxJumps = PlayerPrefs.GetInt("maxJumps");
+        canDash = PlayerPrefs.GetInt("canDash");
+        maxhp = PlayerPrefs.GetInt("maxhp");
+        currenthp = PlayerPrefs.GetInt("currenthp");
+        damage = PlayerPrefs.GetInt("damage");
     }
 }

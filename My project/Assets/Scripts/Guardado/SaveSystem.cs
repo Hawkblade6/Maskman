@@ -52,4 +52,23 @@ public static class SaveSystem
         }
 
     }
+    public static void SetSavedData() {
+
+        PlayerData data = LoadPlayer();
+
+        if (data == null)
+        {
+            ResetPlayerPrefs();
+        }
+        else
+        {
+            PlayerPrefs.SetString("habitacion", data.habitacion);
+            PlayerPrefs.SetInt("entrada", data.entrada);
+            PlayerPrefs.SetInt("maxJumps", data.maxJumps);
+            PlayerPrefs.SetInt("canDash", data.canDash);
+            PlayerPrefs.SetInt("maxhp", data.maxhp);
+            PlayerPrefs.SetInt("currenthp", data.currenthp);
+            PlayerPrefs.SetInt("damage", data.damage);
+        }
+    }
 }

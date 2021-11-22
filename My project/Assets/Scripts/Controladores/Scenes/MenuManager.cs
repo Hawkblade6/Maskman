@@ -15,12 +15,11 @@ public class MenuManager : MonoBehaviour
 
     public void CargarPartida() 
     {
-        SceneManager.LoadScene("CargarPartida");
+        SceneManager.LoadScene(PlayerPrefs.GetString("habitacion"));
     }
 
     public void Salir()
     {
-        Debug.Log("Salimos de la aplicacion");
         Application.Quit();
     }
 
