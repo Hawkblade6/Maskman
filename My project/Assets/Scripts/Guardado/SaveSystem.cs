@@ -18,6 +18,18 @@ public static class SaveSystem
         stream.Close();
     }
 
+    public static void ResetPlayerPrefs() {
+
+        PlayerPrefs.SetInt("maxJumps", 1);
+        PlayerPrefs.SetInt("entrada", 1);
+        PlayerPrefs.SetString("habitacion", "Cueva1");
+
+        PlayerPrefs.SetInt("canDash", 0);
+        PlayerPrefs.SetInt("maxhp", 100);
+        PlayerPrefs.SetInt("currenthp", 100);
+        PlayerPrefs.SetInt("damage", 25);
+    }
+
     public static PlayerData LoadPlayer() 
     {
 

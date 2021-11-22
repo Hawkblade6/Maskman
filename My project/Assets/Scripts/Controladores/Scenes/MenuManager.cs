@@ -8,7 +8,9 @@ public class MenuManager : MonoBehaviour
     public void NuevaPartida()
     {
         //meter qué escena se debe abrir
-        SceneManager.LoadScene("SceneEstibali");
+        SaveSystem.ResetPlayerPrefs();
+        SceneManager.LoadScene("Cueva1");
+        
     }
 
     public void CargarPartida() 
