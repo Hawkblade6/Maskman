@@ -496,7 +496,6 @@ public class PlayerController : MonoBehaviour
             healthBar.SetMaxHealth(PlayerPrefs.GetInt("maxhp"));
             PlayerPrefs.SetInt("currenthp", maxh);
             currentHealth = maxh;
-            //PlayerPrefsLists(0);
         }
         if (collision.tag == "DamageUp")
         {
@@ -505,7 +504,6 @@ public class PlayerController : MonoBehaviour
             dmg += 15;
             PlayerPrefs.SetInt("damage", dmg);
             weaponDamage = dmg;
-            //PlayerPrefsLists(0);
         }
         if (collision.tag == "dobleSalto") {
             Destroy(collision.gameObject);
@@ -520,13 +518,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private void PlayerPrefsLists(int index) {
-    //    int[] hpList = PlayerPrefs.GetInt
-    //    for (int i = 0; i < hpList.Length; i++)
-    //    {
-    //        PlayerPrefs.SetString("AbraCadbra" + i, spells[i]);
-    //    }
-    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {

@@ -18,9 +18,12 @@ public class CheckPowerUps : MonoBehaviour
                 Debug.Log(this);
             }
         }
-        if (etiqueta == "healthUp")
+        if (etiqueta == "DamageUp")
         {
-            
+            if(PlayerPrefs.GetInt("damage") == 40) {
+                Destroy(this.gameObject);
+                Debug.Log(this);
+            }
         }
 
 
