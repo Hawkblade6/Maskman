@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
         if (canJump || jumping)
         {
             jumping = true;
-            
+            moving = false;
             Vector2 newVelocity;
             newVelocity.x = rigidb.velocity.x;
             newVelocity.y = jumpSpeed;
@@ -496,6 +496,7 @@ public class PlayerController : MonoBehaviour
             healthBar.SetMaxHealth(PlayerPrefs.GetInt("maxhp"));
             PlayerPrefs.SetInt("currenthp", maxh);
             currentHealth = maxh;
+            //PlayerPrefsLists(0);
         }
         if (collision.tag == "DamageUp")
         {
@@ -504,8 +505,28 @@ public class PlayerController : MonoBehaviour
             dmg += 15;
             PlayerPrefs.SetInt("damage", dmg);
             weaponDamage = dmg;
+            //PlayerPrefsLists(0);
+        }
+        if (collision.tag == "dobleSalto") {
+            Destroy(collision.gameObject);
+            PlayerPrefs.SetInt("maxJumps", 2);
+            maxJumps = PlayerPrefs.GetInt("maxJumps");
+        }
+        if (collision.tag == "dashOn")
+        {
+            Destroy(collision.gameObject);
+            PlayerPrefs.SetInt("canDash", 1);
+            canDash = true;
         }
     }
+
+    //private void PlayerPrefsLists(int index) {
+    //    int[] hpList = PlayerPrefs.GetInt
+    //    for (int i = 0; i < hpList.Length; i++)
+    //    {
+    //        PlayerPrefs.SetString("AbraCadbra" + i, spells[i]);
+    //    }
+    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {

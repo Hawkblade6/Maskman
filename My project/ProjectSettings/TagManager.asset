@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - HealthUp
   - DamageUp
+  - dobleSalto
+  - dashOn
   layers:
   - Default
   - TransparentFX
