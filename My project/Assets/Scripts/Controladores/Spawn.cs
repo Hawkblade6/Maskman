@@ -8,7 +8,7 @@ public class Spawn : MonoBehaviour
     private int numEntrada;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (!PlayerPrefs.HasKey("entrada")) {
             PlayerPrefs.SetInt("entrada", 1);

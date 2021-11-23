@@ -26,6 +26,8 @@ public class SceneLoader : MonoBehaviour
 
     public void DeathScene() {
 
+
+        PlayerPrefs.SetInt("currenthp", PlayerPrefs.GetInt("maxhp"));
         SceneManager.LoadScene("DeadScene");
     }
 }

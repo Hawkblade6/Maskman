@@ -28,6 +28,7 @@ public static class SaveSystem
         PlayerPrefs.SetInt("maxhp", 100);
         PlayerPrefs.SetInt("currenthp", 100);
         PlayerPrefs.SetInt("damage", 25);
+        PlayerPrefs.SetString("PowerupHealth", "0000");
     }
 
     public static PlayerData LoadPlayer() 

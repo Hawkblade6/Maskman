@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviour
         isInputEnabled = true;
         dashreset = true;
         isAttackable = true;
-        healthBar.SetMaxHealth(PlayerPrefs.GetInt("maxhp"));
+        maxHealth = PlayerPrefs.GetInt("maxhp");
+        healthBar.SetMaxHealth(maxHealth);
         currentHealth = PlayerPrefs.GetInt("currenthp");
 
         animator = gameObject.GetComponent<Animator>();
