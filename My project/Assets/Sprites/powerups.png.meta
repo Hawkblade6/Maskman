@@ -11,6 +11,9 @@ TextureImporter:
   - first:
       213: 621560852509794982
     second: powerups_2
+  - first:
+      213: 4928671260392873470
+    second: powerups_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -158,6 +161,27 @@ TextureImporter:
       bones: []
       spriteID: 6a2a22c5d4a30a800800000000000000
       internalID: 621560852509794982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: powerups_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 2857
+        width: 56
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efdd46ae568266440800000000000000
+      internalID: 4928671260392873470
       vertices: []
       indices: 
       edges: []

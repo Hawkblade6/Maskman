@@ -5,10 +5,12 @@ using UnityEngine;
 public class CheckPowerUps : MonoBehaviour
 {
     private string etiqueta;
+    private PlayerController pc;
 
     // Start is called before the first frame update
     void Start()
     {
+        pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         etiqueta = this.tag;
 
         if ( etiqueta == "dobleSalto")
@@ -25,6 +27,13 @@ public class CheckPowerUps : MonoBehaviour
                 Debug.Log(this);
             }
         }
+        if (etiqueta == "Cure")
+        {
+            
+            int chp = PlayerPrefs.GetInt("currenthp");
+            pc.healthBar.SetHealth(chp + 40);
+        }
+
 
 
     }

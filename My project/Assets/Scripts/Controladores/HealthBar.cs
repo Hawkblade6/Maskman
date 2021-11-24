@@ -43,7 +43,8 @@ public class HealthBar : MonoBehaviour
             texto.text = slider.value + " / " + slider.maxValue;
             fadeawaySlider.value = health;
         }
-
+        PlayerPrefs.SetInt("currenthp", (int) health);
+         
     }
 
     public float GetHealth() 

@@ -6,10 +6,10 @@ TagManager:
   tags:
   - NPC
   - Enemy
-  - HealthUp
   - DamageUp
   - dobleSalto
   - dashOn
+  - Cure
   layers:
   - Default
   - TransparentFX

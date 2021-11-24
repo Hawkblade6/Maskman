@@ -498,6 +498,12 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.SetInt("currenthp", maxh);
             currentHealth = maxh;
         }
+        if (collision.tag == "Cure") 
+        {
+            Destroy(collision.gameObject);
+            int chp = PlayerPrefs.GetInt("currenthp");
+            healthBar.SetHealth(chp + 40);
+        }
         if (collision.tag == "DamageUp")
         {
             Destroy(collision.gameObject);
