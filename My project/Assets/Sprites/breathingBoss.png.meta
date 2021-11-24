@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: -6111169982098363259
     second: breathingBoss_2
+  - first:
+      213: 295883742502106415
+    second: breathingBoss_3
+  - first:
+      213: 930888496769137189
+    second: breathingBoss_4
+  - first:
+      213: -7919133778591862104
+    second: breathingBoss_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -158,6 +167,69 @@ TextureImporter:
       bones: []
       spriteID: 58c2ff69743c03ba0800000000000000
       internalID: -6111169982098363259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breathingBoss_3
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 536
+        width: 145
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f25b6a632b03b1400800000000000000
+      internalID: 295883742502106415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breathingBoss_4
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 536
+        width: 145
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52afb6fd72e2bec00800000000000000
+      internalID: 930888496769137189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breathingBoss_5
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 536
+        width: 145
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a23c3629c5991290800000000000000
+      internalID: -7919133778591862104
       vertices: []
       indices: 
       edges: []
