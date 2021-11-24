@@ -27,15 +27,6 @@ public class CheckPowerUps : MonoBehaviour
                 Debug.Log(this);
             }
         }
-        if (etiqueta == "Cure")
-        {
-            
-            int chp = PlayerPrefs.GetInt("currenthp");
-            pc.healthBar.SetHealth(chp + 40);
-        }
-
-
-
     }
 
 }
