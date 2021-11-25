@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private int maxJumps = 2;
     private int gravity = 2;
     private float attackEffectLifeTime = 0.1f;
-    private float currentHealth;
+    public float currentHealth;
     private bool isGrounded;
     private bool canJump;
     private bool _canClimb;
@@ -498,8 +498,15 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Cure") 
         {
             Destroy(collision.gameObject);
-            int chp = PlayerPrefs.GetInt("currenthp");
-            healthBar.SetHealth(chp + 40);
+            if (currentHealth + 40 >= maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            else {
+                currentHealth += 40;
+            }
+            
+            healthBar.SetHealth(currentHealth + 40);
         }
         if (collision.tag == "DamageUp")
         {

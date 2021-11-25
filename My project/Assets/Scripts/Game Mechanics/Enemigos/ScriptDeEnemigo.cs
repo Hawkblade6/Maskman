@@ -124,11 +124,9 @@ public class ScriptDeEnemigo : MonoBehaviour
 		if (visionDerecha.GetComponent<Vision>().GetSide()) {
 			gameObject.GetComponent<Animator> ().SetBool ("Left", false);
 			transform.Translate (Vector3.right * velocidad * Time.deltaTime);
-			Debug.Log("paladerecha");
 		} else if (visionIzquierda.GetComponent<Vision>().GetSide()) {
 			gameObject.GetComponent<Animator> ().SetBool ("Left", true);
 			transform.Translate (Vector3.left * velocidad * Time.deltaTime);
-			Debug.Log("palaizquierda");
 		}
 		else{
 			ataca = false;

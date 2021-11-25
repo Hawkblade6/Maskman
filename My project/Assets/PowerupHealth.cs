@@ -53,6 +53,7 @@ public class PowerupHealth : MonoBehaviour
         PlayerPrefs.SetInt("maxhp", (int)(PlayerPrefs.GetInt("maxhp") + maxHealthUp));
         pc.healthBar.SetMaxHealth(pc.maxHealth);
         pc.healthBar.SetHealth(pc.maxHealth);
+        pc.currentHealth = pc.maxHealth;
 
 
         Destroy(gameObject);
