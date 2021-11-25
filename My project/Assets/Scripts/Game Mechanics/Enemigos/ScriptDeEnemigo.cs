@@ -46,6 +46,13 @@ public class ScriptDeEnemigo : MonoBehaviour
 	{
 		aS = (AudioSource)gameObject.GetComponent<AudioSource> ();
 		DPS = 0;
+
+		if (gameObject.name == "Boss")
+		{
+			if (PlayerPrefs.GetInt("canDash") == 1) {
+				gameObject.SetActive(false);
+			}
+		}
 	}
 
 	void Start ()
@@ -100,6 +107,9 @@ public class ScriptDeEnemigo : MonoBehaviour
 		GetComponent<AudioSource> ().PlayOneShot (SonidoMuerte, 1.0F);
         
         yield return new WaitForSeconds (gameObject.GetComponent<ParticleSystem> ().main.duration + 0.2F);
+		if (gameObject.name == "Boss") {
+			PlayerPrefs.SetInt("canDash", 1);
+		}
         Destroy(gameObject);
 
     }

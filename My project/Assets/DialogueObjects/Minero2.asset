@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f9d2c5ba9e32541b5108d24130a16c, type: 3}
+  m_Name: Minero2
+  m_EditorClassIdentifier: 
+  dialogue:
+  - "\xBFCrees que podras llevarnos a casa?"
+  responses:
+  - responseText: Es posible
+    dialogueObject: {fileID: 11400000, guid: c217132cfc78e4c4d96550815d2fbba9, type: 2}
+  - responseText: Parece complicado
+    dialogueObject: {fileID: 11400000, guid: 89c12af47269ecd4ba30482d86153150, type: 2}

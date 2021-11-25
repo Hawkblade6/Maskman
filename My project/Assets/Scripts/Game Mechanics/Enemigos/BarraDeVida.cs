@@ -4,8 +4,8 @@ using System.Collections;
 public class BarraDeVida : MonoBehaviour {
 
 	public float tamañoBarra = 100;
-	public float totalVida = 100F;
-	public float vidaActual = 100F;
+	public float totalVida;
+	public float vidaActual;
 	private float sizeBarra;
 
 	public TextureWrapMode TipoDeRepeticion;

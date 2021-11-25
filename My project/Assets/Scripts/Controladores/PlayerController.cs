@@ -6,14 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Dialogue dialogue;
-
-    public Dialogue Dialogue => dialogue;
-
-    public Interactable Interactable { get; set; }
-
-
-    
     public int jumpsLeft;
     public float maxHealth;
     public float weaponDamage;
@@ -35,6 +27,10 @@ public class PlayerController : MonoBehaviour
     public Color invulnerableColor;
     public HealthBar healthBar;
     public SceneLoader sc;
+
+    [SerializeField] private Dialogue dialogue;
+    public Dialogue Dialogue => dialogue;
+    public Interactable Interactable { get; set; }
 
     private AudioSource[] mySounds;
     private AudioSource stepSound;
@@ -287,7 +283,7 @@ public class PlayerController : MonoBehaviour
 
     private void DashControl()
     {
-        if (Input.GetButtonDown("Dash") && canDash && dashreset)
+        if (Input.GetButtonDown("Dash") && canDash && dashreset && PlayerPrefs.GetInt("canDash") == 1)
             Dash();
     }
 
@@ -476,7 +472,8 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Interact")) 
             {
                 npc = false;
-                //Interactable.Interact(this);
+                Interactable.Interact(this);
+                //Interactable.Interact(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>());
                 //dia.ShowDialogue(obj);
             }
         }

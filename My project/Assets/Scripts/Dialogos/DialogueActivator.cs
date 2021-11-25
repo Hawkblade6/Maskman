@@ -5,6 +5,11 @@ public class DialogueActivator : MonoBehaviour, Interactable
     [SerializeField] private DialogueObject dialogueObject;
     [SerializeField] private PlayerController playerController;
 
+    //public void Update()
+    //{
+    //    playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    //}
+
     public void UpdateDialogueObject(DialogueObject dialogueObject)
     {
         this.dialogueObject = dialogueObject;

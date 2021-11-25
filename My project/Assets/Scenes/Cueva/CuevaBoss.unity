@@ -27007,7 +27007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295293131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 116.76, y: 4.07, z: 0}
+  m_LocalPosition: {x: 107.2, y: 2.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -27146,6 +27146,7 @@ GameObject:
   - component: {fileID: 2023942790}
   - component: {fileID: 2023942792}
   - component: {fileID: 2023942791}
+  - component: {fileID: 2023942793}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -32314,3 +32315,17 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2023942793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023942781}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ca4b2087b756545885374f2eaef339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pr: {fileID: 1967144204961050108, guid: 11165007bdaf52549a52132aab9b2f3a, type: 3}
+  offset: {fileID: 2023942784}
