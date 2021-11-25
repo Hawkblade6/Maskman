@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Minero1
   m_EditorClassIdentifier: 
   dialogue:
-  - Vinimos hasta aqui pero nos da miedo volver.
+  - 'Vinimos hasta aqui pero nos da miedo volver.
+
+    Se oyen rugidos desde abajo.'
   responses: []

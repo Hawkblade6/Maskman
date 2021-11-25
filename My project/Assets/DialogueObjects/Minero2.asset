@@ -13,9 +13,5 @@ MonoBehaviour:
   m_Name: Minero2
   m_EditorClassIdentifier: 
   dialogue:
-  - "\xBFCrees que podras llevarnos a casa?"
-  responses:
-  - responseText: Es posible
-    dialogueObject: {fileID: 11400000, guid: c217132cfc78e4c4d96550815d2fbba9, type: 2}
-  - responseText: Parece complicado
-    dialogueObject: {fileID: 11400000, guid: 89c12af47269ecd4ba30482d86153150, type: 2}
+  - "\xBFCrees que podremos volver a casa?"
+  responses: []
