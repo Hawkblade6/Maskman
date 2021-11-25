@@ -4965,7 +4965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcc13f7f643dad4d8aac35916aca4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
   jumpsLeft: 1
   maxHealth: 200
   weaponDamage: 1
@@ -4986,6 +4985,7 @@ MonoBehaviour:
   invulnerableColor: {r: 0, g: 0, b: 0, a: 0}
   healthBar: {fileID: 2122894948676029102}
   sc: {fileID: 6676533513500766619, guid: 5e072b35d4ce45b4a978468818a74593, type: 3}
+  dialogue: {fileID: 2122894947888799276}
 --- !u!95 &3662226799968921727
 Animator:
   serializedVersion: 3
@@ -10168,6 +10168,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8117647
       objectReference: {fileID: 0}
+    - target: {fileID: 6822479313204737751, guid: 4edd923f8f61ec7459f104108eb91cf1, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6822479313348266977, guid: 4edd923f8f61ec7459f104108eb91cf1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10191,6 +10195,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6822479312661224209, guid: 4edd923f8f61ec7459f104108eb91cf1, type: 3}
   m_PrefabInstance: {fileID: 4888755787020469560}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2122894947888799276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6822479312661224212, guid: 4edd923f8f61ec7459f104108eb91cf1, type: 3}
+  m_PrefabInstance: {fileID: 4888755787020469560}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d48a6d6109b14743a0e0fa2e7ab59f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2122894948676029102 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6822479312981315478, guid: 4edd923f8f61ec7459f104108eb91cf1, type: 3}

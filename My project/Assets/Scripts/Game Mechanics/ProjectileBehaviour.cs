@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
-    public float speed = 4;
-    void Update()
-    {
-        transform.position += -transform.right * Time.deltaTime * speed; 
-    }
-
     void OnCollisionEnter2D(Collision2D col) {
-
+        
         Destroy(gameObject);
+
+        if (col.collider.tag == "Player")
+        {
+            Debug.Log(col.collider.tag);
+            col.collider.GetComponent<PlayerController>().hurt(20f);
+        }
     }
 }

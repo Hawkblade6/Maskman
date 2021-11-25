@@ -30,6 +30,7 @@ public class DialogueActivator : MonoBehaviour, Interactable
             if (player.Interactable is DialogueActivator dialogueActivator && dialogueActivator == this)
             {
                 player.Interactable = null;
+                player.Dialogue.CloseDialogueBox();
             }
         }
     }
