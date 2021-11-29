@@ -27535,7 +27535,7 @@ MonoBehaviour:
   dano: 10
   danoPneuma: 5
   cooldown: 3
-  vida: 45
+  vida: 500
   SonidoMonstruo: {fileID: 8300000, guid: 50db747670cf509478a90fd005c114da, type: 3}
   SonidoMuerte: {fileID: 8300000, guid: a5f72220287ca7543b48538cb3450c4b, type: 3}
   SonidoGolpeado: {fileID: 8300000, guid: 50db747670cf509478a90fd005c114da, type: 3}
@@ -32580,4 +32580,4 @@ MonoBehaviour:
   pr: {fileID: 8673002877471513236, guid: 11165007bdaf52549a52132aab9b2f3a, type: 3}
   di: {fileID: 360691339}
   dd: {fileID: 413153962}
-  speed: 8000
+  speed: 300

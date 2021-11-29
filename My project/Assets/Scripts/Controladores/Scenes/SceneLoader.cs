@@ -8,7 +8,14 @@ public class SceneLoader : MonoBehaviour
 
     public string nameScene;
     public int numEntrada;
+
+    private AudioManager am;
     public GameObject player;
+
+    public void Start()
+    {
+        am = FindObjectOfType<AudioManager>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +29,8 @@ public class SceneLoader : MonoBehaviour
             nameScene = PlayerPrefs.GetString("habitacion");
         }
         SceneManager.LoadScene(nameScene);
+
+        am.LoadTracks();
     }
 
     public void DeathScene() {
