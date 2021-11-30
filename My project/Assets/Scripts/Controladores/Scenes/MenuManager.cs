@@ -5,25 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public AudioManager am;
+    private AudioManager am;
+    public SceneLoader sc;
+
+    public void Awake()
+    {
+        am = FindObjectOfType<AudioManager>();
+    }
 
     public void NuevaPartida()
     {
-        //meter qué escena se debe abrir
-        SaveSystem.ResetPlayerPrefs();
         am.LoadTracks();
-        SceneManager.LoadScene("Cueva1");
-
-       
+        SaveSystem.ResetPlayerPrefs();
+        sc.LoadScene();
+        am.LoadTracks();
     }
 
     public void CargarPartida()
     {
+        am.LoadTracks();
         if (!PlayerPrefs.HasKey("habitacion")) {
             PlayerPrefs.SetString("habitacion", "Cueva1");
         }
+        sc.LoadScene();
         am.LoadTracks();
-        SceneManager.LoadScene(PlayerPrefs.GetString("habitacion"));
     }
 
     public void Salir()

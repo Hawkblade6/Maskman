@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -473,8 +474,6 @@ public class PlayerController : MonoBehaviour
             {
                 npc = false;
                 Interactable.Interact(this);
-                //Interactable.Interact(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>());
-                //dia.ShowDialogue(obj);
             }
         }
     }
@@ -529,13 +528,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "NPC")
         {
             npc = false;
-            //dia.CloseDialogueBox();
         }
     }
 

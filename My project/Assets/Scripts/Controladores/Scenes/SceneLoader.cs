@@ -25,9 +25,11 @@ public class SceneLoader : MonoBehaviour
     }
 
     public void LoadScene() {
+        nameScene = PlayerPrefs.GetString("habitacion", nameScene);
         if (nameScene == "") { 
             nameScene = PlayerPrefs.GetString("habitacion");
         }
+        Debug.Log(nameScene);
         SceneManager.LoadScene(nameScene);
 
         am.LoadTracks();
@@ -38,5 +40,9 @@ public class SceneLoader : MonoBehaviour
 
         PlayerPrefs.SetInt("currenthp", PlayerPrefs.GetInt("maxhp"));
         SceneManager.LoadScene("DeadScene");
+    }
+
+    public void LoadMenuPrincpial() {
+        SceneManager.LoadScene("MenuPrincipal");
     }
 }

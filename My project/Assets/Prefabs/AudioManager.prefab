@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f7a450e56ef31af4d8a4a4153a32315f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e81b9001d8652b344bfcf59de81229bf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.05
   m_Pitch: 1
@@ -141,5 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 4679986986220171378}
+  trackMenu: {fileID: 8300000, guid: ebaed6be6bdd2bb429f3ee3fc5965f90, type: 3}
   track1: {fileID: 8300000, guid: e81b9001d8652b344bfcf59de81229bf, type: 3}
   trackBoss: {fileID: 8300000, guid: f7a450e56ef31af4d8a4a4153a32315f, type: 3}

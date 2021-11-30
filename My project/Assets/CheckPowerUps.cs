@@ -12,21 +12,17 @@ public class CheckPowerUps : MonoBehaviour
     {
         pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         etiqueta = this.tag;
-        Debug.Log(this+ "1");
 
         if ( etiqueta == "dobleSalto")
         {
-            Debug.Log(this);
             if (PlayerPrefs.GetInt("maxJumps") == 2) {
                 Destroy(this.gameObject);
-                Debug.Log(this +"2");
             }
         }
         if (etiqueta == "DamageUp")
         {
             if(PlayerPrefs.GetInt("damage") == 40) {
                 Destroy(this.gameObject);
-                Debug.Log(this);
             }
         }
     }
